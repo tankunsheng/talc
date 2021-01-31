@@ -4,10 +4,11 @@ import 'antd/dist/antd.css';
 import './src/styles/style.scss';
 import { Layout, Menu } from 'antd';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Typography } from 'antd';
 import Home from './src/pages/home';
 import About from './src/pages/about';
 import Faqs from './src/pages/faq';
-
+const { Title } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
 const App = () => {
   console.log(About);
@@ -15,7 +16,7 @@ const App = () => {
     <Router>
       <Layout id="page-container">
         <Header
-          style={{ backgroundColor: 'white', paddingLeft: '0' }}
+          style={{ backgroundColor: 'white', padding: '10' }}
           className="header"
         >
           {/* <div className="logo">
@@ -23,7 +24,9 @@ const App = () => {
           </div> */}
           <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']}>
             <Menu.Item className="logo" style={{ float: 'left' }}>
-              <Link to="/">TALC</Link>
+              <Title level={4}>
+                <Link to="/">The Afterlife Company</Link>
+              </Title>
             </Menu.Item>
             <Menu.Item key="1" style={{ float: 'right' }}>
               Log In/Sign Up
