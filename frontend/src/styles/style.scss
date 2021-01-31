@@ -3,6 +3,25 @@
 $font: 'Karla', sans-serif;
 $primary-color: black;
 
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 2.5rem;    /* Footer height */
+}
+
+#footer {
+  background-color: black;
+  color:lightgray;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;            /* Footer height */
+  padding-bottom: 2.5em;
+}
+
 .ant-menu-item:hover a, .ant-menu-item:hover{
   color: $primary-color !important;
 }

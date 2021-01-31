@@ -4,36 +4,43 @@ import 'antd/dist/antd.css';
 import './src/styles/style.scss';
 import { Layout, Menu } from 'antd';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Home from './src/pages/home';
 import About from './src/pages/about';
 import Faqs from './src/pages/faq';
 
-const { Header, Content, Sider } = Layout;
+const { Header, Content, Sider, Footer } = Layout;
 const App = () => {
   console.log(About);
   return (
     <Router>
-      <Layout>
+      <Layout id="page-container">
         <Header
-          style={{ backgroundColor: 'white', padding: '0' }}
+          style={{ backgroundColor: 'white', paddingLeft: '0' }}
           className="header"
         >
-          <div className="logo" />
-          <Menu
-            theme="light"
-            mode="horizontal"
-            defaultSelectedKeys={['2']}
-            style={{ float: 'right' }}
-          >
-            <Menu.Item key="1">Log In/Sign Up</Menu.Item>
-            <Menu.Item key="2">Language</Menu.Item>
-            <Menu.Item key="3">Country</Menu.Item>
+          {/* <div className="logo">
+            <Link to="/">TALC</Link>
+          </div> */}
+          <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']}>
+            <Menu.Item className="logo" style={{ float: 'left' }}>
+              <Link to="/">TALC</Link>
+            </Menu.Item>
+            <Menu.Item key="1" style={{ float: 'right' }}>
+              Log In/Sign Up
+            </Menu.Item>
+            <Menu.Item key="2" style={{ float: 'right' }}>
+              Language
+            </Menu.Item>
+            <Menu.Item key="3" style={{ float: 'right' }}>
+              Country
+            </Menu.Item>
           </Menu>
         </Header>
         <Layout>
           <Sider width={200} className="site-layout-background">
             <Menu
               mode="inline"
-              defaultSelectedKeys={['1']}
+              // defaultSelectedKeys={['1']}
               defaultOpenKeys={['sub1']}
               style={{ height: '100%', borderRight: 0 }}
             >
@@ -41,7 +48,7 @@ const App = () => {
                 <Link to="/about">ABOUT US</Link>
               </Menu.Item>
               <Menu.Item key="2">
-                <Link to="/faq">FAQs</Link>
+                <Link to="/faq/general">FAQs</Link>
               </Menu.Item>
               <Menu.Item key="3">
                 <Link to="/products">PRODUCTS/SERVICES DIRECTORY</Link>
@@ -61,6 +68,9 @@ const App = () => {
               }}
             >
               <Switch>
+                <Route path="/" exact>
+                  <Home />
+                </Route>
                 <Route path="/about">
                   <About />
                 </Route>
@@ -71,6 +81,9 @@ const App = () => {
             </Content>
           </Layout>
         </Layout>
+        <Footer id="footer" style={{ textAlign: 'center' }}>
+          Ant Design ©2018 Created by Ant UED
+        </Footer>
       </Layout>
     </Router>
   );
