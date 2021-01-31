@@ -4,8 +4,6 @@ import 'antd/dist/antd.css';
 import './src/styles/style.scss';
 import { Layout, Menu } from 'antd';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-
-// import  NotificationOutlined,'@ant-design/icons';
 import About from './src/pages/about';
 import Faqs from './src/pages/faq';
 
@@ -45,19 +43,12 @@ const App = () => {
               <Menu.Item key="2">
                 <Link to="/faq">FAQs</Link>
               </Menu.Item>
-              <Menu.Item key="3">PRODUCTS/SERVICES DIRECTORY</Menu.Item>
-              <Menu.Item key="4">OBITUARY</Menu.Item>
-
-              {/* <SubMenu
-              key="sub3"
-              icon={<NotificationOutlined />}
-              title="subnav 3"
-            >
-              <Menu.Item key="9">option9</Menu.Item>
-              <Menu.Item key="10">option10</Menu.Item>
-              <Menu.Item key="11">option11</Menu.Item>
-              <Menu.Item key="12">option12</Menu.Item>
-            </SubMenu> */}
+              <Menu.Item key="3">
+                <Link to="/products">PRODUCTS/SERVICES DIRECTORY</Link>
+              </Menu.Item>
+              <Menu.Item key="4">
+                <Link to="/obituary">OBITUARY</Link>
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>

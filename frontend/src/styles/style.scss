@@ -2,11 +2,8 @@
 
 $font: 'Karla', sans-serif;
 $primary-color: black;
-h1 {
-  font-family: $font;
-  color: $primary-color;
-}
-.ant-menu-item:hover {
+
+.ant-menu-item:hover a, .ant-menu-item:hover{
   color: $primary-color !important;
 }
 header {
@@ -15,14 +12,18 @@ header {
     border-bottom: 2px solid $primary-color !important;
   }
 }
-
+.ant-layout{
+  background-color: white;
+}
 .ant-layout-sider-children {
   .ant-menu-inline {
     .ant-menu-item {
+      line-height: 2em;
+      margin-bottom: 1.2em;
       white-space: normal !important;
       height: auto !important;
     }
-    .ant-menu-item-selected {
+    .ant-menu-item-selected a{
       color: $primary-color !important;
       font-size: large;
     }

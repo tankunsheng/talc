@@ -44,6 +44,7 @@ module.exports = {
     host,
 
     port: 3010,
+    historyApiFallback: true,
 
     // Public path is root of content base
     publicPath: '/',
@@ -52,7 +53,17 @@ module.exports = {
     rules: [
       {
         test: /\.(sc|c)ss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              // Automatically enable css modules for files satisfying `/\.module\.\w+$/i` RegExp.
+              modules: { auto: true },
+            },
+          },
+          'sass-loader',
+        ],
       },
       {
         test: /\.js$/,
