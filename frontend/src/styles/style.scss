@@ -1,10 +1,34 @@
 @import url('https://fonts.googleapis.com/css?family=Karla:weight@400;700&display=swap');
 
 $font: 'Karla', sans-serif;
-$primary-color: #3e6f9e;
-
-
+$primary-color: black;
 h1 {
   font-family: $font;
   color: $primary-color;
+}
+.ant-menu-item:hover {
+  color: $primary-color !important;
+}
+header {
+  .ant-menu-item-selected {
+    color: $primary-color !important;
+    border-bottom: 2px solid $primary-color !important;
+  }
+}
+
+.ant-layout-sider-children {
+  .ant-menu-inline {
+    .ant-menu-item {
+      white-space: normal !important;
+      height: auto !important;
+    }
+    .ant-menu-item-selected {
+      color: $primary-color !important;
+      font-size: large;
+    }
+    .ant-menu-item::after {
+      border-right: 2px solid $primary-color !important;
+      border-bottom: 0px !important;
+    }
+  }
 }

@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
-console.log(join(__dirname))
+console.log(join(__dirname));
 @Module({
   imports: [
     ServeStaticModule.forRoot({
