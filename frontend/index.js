@@ -25,7 +25,7 @@ const App = () => {
           <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']}>
             <Menu.Item className="logo" style={{ float: 'left' }}>
               <Title level={4}>
-                <Link to="/">The Afterlife Company</Link>
+                <Link to="/">The Afterlife Company TEST</Link>
               </Title>
             </Menu.Item>
             <Menu.Item key="1" style={{ float: 'right' }}>
