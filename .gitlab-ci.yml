@@ -1,21 +1,20 @@
 image: docker:19.03
 
 variables:
-
   REPOSITORY_URL: 704361135933.dkr.ecr.ap-southeast-1.amazonaws.com/talc
   REGION: ap-southeast-1
-  TASK_DEFINITION_NAME: towkay-be
-  CLUSTER_NAME: quintant-dev-fargate
-  SERVICE_NAME: towkay-be-new
+  TASK_DEFINITION_NAME: talc-dev
+  CLUSTER_NAME: talc-dev
+  SERVICE_NAME: svc-talc-dev
   CPU: 512
-  MEMORY: 1024 
+  MEMORY: 1024
   TASKS_COUNT: 1
   EXECUTION_ROLE_ARN: arn:aws:iam::704361135933:role/ecsTaskExecutionRole
   AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
   AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
 
 services:
-- docker:19.03.1-dind
+  - docker:19.03.1-dind
 
 before_script:
   - uname -a
@@ -43,26 +42,26 @@ build:
   tags:
     - docker
 
-# deploy:
-#   stage: deploy
-#   script:
-#     - apk add --no-cache jq
-#     - TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$TASK_DEFINITION_NAME" --region "${REGION}")
-#     - NEW_CONTAINER_DEFINTIION=$(echo $TASK_DEFINITION | jq --arg IMAGE $REPOSITORY_URL:"$CI_COMMIT_BRANCH"-"$IMAGE_TAG" '.taskDefinition.containerDefinitions[0].image = $IMAGE | .taskDefinition.containerDefinitions')
-#     - echo "Registering new container definition..."
-#     - aws ecs register-task-definition --region "${REGION}" --family "${TASK_DEFINITION_NAME}" --container-definitions "${NEW_CONTAINER_DEFINTIION}" --cpu ${CPU} --memory ${MEMORY} --execution-role-arn "${EXECUTION_ROLE_ARN}" --network-mode "awsvpc" --requires-compatibilities "FARGATE"
-#     - TASK_ARN=$(aws ecs list-tasks --region "${REGION}" --cluster "${CLUSTER_NAME}" --service-name "${SERVICE_NAME}")
-#     - TASK_IDS=$(echo $TASK_ARN | jq -j '.taskArns | join(" ")')
-#     - echo "Updating the service..."
-#     - aws ecs update-service --region "${REGION}" --cluster "${CLUSTER_NAME}" --service "${SERVICE_NAME}"  --task-definition "${TASK_DEFINITION_NAME}" --desired-count "${TASKS_COUNT}"
-#     - echo "Waiting until the previous task ${TASK_ID} is stopped..."
-    
-#     - echo $TASK_ARN
-#     - echo $TASK_IDS
-#     - echo $REGION
-#     - echo $CLUSTER_NAME
-    
-  # only:
-  #   - master
-  # tags:
-  #   - docker
+deploy:
+  stage: deploy
+  script:
+    - apk add --no-cache jq
+    - TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$TASK_DEFINITION_NAME" --region "${REGION}")
+    - NEW_CONTAINER_DEFINTIION=$(echo $TASK_DEFINITION | jq --arg IMAGE $REPOSITORY_URL:"$CI_COMMIT_BRANCH"-"$IMAGE_TAG" '.taskDefinition.containerDefinitions[0].image = $IMAGE | .taskDefinition.containerDefinitions')
+    - echo "Registering new container definition..."
+    - aws ecs register-task-definition --region "${REGION}" --family "${TASK_DEFINITION_NAME}" --container-definitions "${NEW_CONTAINER_DEFINTIION}" --cpu ${CPU} --memory ${MEMORY} --execution-role-arn "${EXECUTION_ROLE_ARN}" --network-mode "awsvpc" --requires-compatibilities "FARGATE"
+    - TASK_ARN=$(aws ecs list-tasks --region "${REGION}" --cluster "${CLUSTER_NAME}" --service-name "${SERVICE_NAME}")
+    - TASK_IDS=$(echo $TASK_ARN | jq -j '.taskArns | join(" ")')
+    - echo "Updating the service..."
+    - aws ecs update-service --region "${REGION}" --cluster "${CLUSTER_NAME}" --service "${SERVICE_NAME}"  --task-definition "${TASK_DEFINITION_NAME}" --desired-count "${TASKS_COUNT}"
+    - echo "Waiting until the previous task ${TASK_ID} is stopped..."
+
+    - echo $TASK_ARN
+    - echo $TASK_IDS
+    - echo $REGION
+    - echo $CLUSTER_NAME
+
+  only:
+    - master
+  tags:
+    - docker
