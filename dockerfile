@@ -2,7 +2,7 @@ FROM node:12-alpine as builder
 WORKDIR /app
 COPY . .
 RUN npm install
-RUN npm run builder
+RUN npm run build
 
 FROM node:12-alpine
 WORKDIR /app
