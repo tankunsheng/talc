@@ -2,7 +2,7 @@ image: docker:19.03
 
 variables:
 
-  REPOSITORY_URL: 704361135933.dkr.ecr.ap-southeast-1.amazonaws.com/towkay-be
+  REPOSITORY_URL: 704361135933.dkr.ecr.ap-southeast-1.amazonaws.com/talc
   REGION: ap-southeast-1
   TASK_DEFINITION_NAME: towkay-be
   CLUSTER_NAME: quintant-dev-fargate
