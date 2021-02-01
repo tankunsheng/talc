@@ -8,6 +8,6 @@ FROM node:12-alpine
 WORKDIR /app
 COPY --from=builder /app/package*.json ./
 RUN npm install --only=production
-COPY --from=builder /dist ./dist
+COPY --from=builder /app/dist ./dist
 
 CMD ["npm", "run", "start:prod"]
