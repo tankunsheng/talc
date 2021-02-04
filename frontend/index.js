@@ -6,6 +6,7 @@ import { Layout, Menu } from 'antd';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Typography } from 'antd';
 import Home from './src/pages/home';
+import Login from './src/pages/login';
 import About from './src/pages/about';
 import Faqs from './src/pages/faq';
 const { Title } = Typography;
@@ -19,23 +20,21 @@ const App = () => {
           style={{ backgroundColor: 'white', padding: '10' }}
           className="header"
         >
-          {/* <div className="logo">
-            <Link to="/">TALC</Link>
-          </div> */}
           <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']}>
             <Menu.Item className="logo" style={{ float: 'left' }}>
               <Title level={4}>
                 <Link to="/">The Afterlife Company TEST</Link>
               </Title>
             </Menu.Item>
+
             <Menu.Item key="1" style={{ float: 'right' }}>
-              Log In/Sign Up
-            </Menu.Item>
-            <Menu.Item key="2" style={{ float: 'right' }}>
               Language
             </Menu.Item>
-            <Menu.Item key="3" style={{ float: 'right' }}>
+            <Menu.Item key="2" style={{ float: 'right' }}>
               Country
+            </Menu.Item>
+            <Menu.Item key="3" style={{ float: 'right' }}>
+              <Link to="/login">Log In/Sign Up</Link>
             </Menu.Item>
           </Menu>
         </Header>
@@ -73,6 +72,9 @@ const App = () => {
               <Switch>
                 <Route path="/" exact>
                   <Home />
+                </Route>
+                <Route path="/login" exact>
+                  <Login />
                 </Route>
                 <Route path="/about">
                   <About />
