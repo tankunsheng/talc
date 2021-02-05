@@ -1,14 +1,15 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import './about.scss';
 import { Row, Col } from 'antd';
 import { Tabs } from 'antd';
 const { TabPane } = Tabs;
-import { Form, Input, Button, Select, DatePicker } from 'antd';
+import { Form, Input, Button, Select, DatePicker, notification } from 'antd';
 import './login.scss';
 import axios from '../libs/axios';
 
 function callback(key) {
-  console.log(key);
+  // console.log(key);
 }
 const { Option } = Select;
 
@@ -26,6 +27,7 @@ const tailLayout = {
 
 export default () => {
   const [form] = Form.useForm();
+  const history = useHistory();
   const onGenderChange = (value) => {
     switch (value) {
       case 'male':
@@ -41,10 +43,27 @@ export default () => {
         return;
     }
   };
-  const onSubmit = async (values) => {
+  const openNotification = () => {
+    notification.open({
+      message: 'Please verify your email address',
+      description:
+        'Thank you for signing up. In order to access all services, please verify the email address used for registration by clicking on the link in the confirmation mail sent to the address.',
+      onClick: () => {
+        console.log('Notification Clicked!');
+      },
+      duration: 0,
+    });
+    history.push('/');
+  };
+  const onSignUpSubmit = async (values) => {
     console.log(values);
-    const test = await axios.get('app/signup');
-    console.log(test);
+    const response = await axios.post('app/signup', {
+      ...values,
+    });
+    console.log(response);
+    if (response.status === 201) {
+      openNotification();
+    }
   };
   const onReset = () => {
     form.resetFields();
@@ -61,7 +80,7 @@ export default () => {
                 {...loginLayout}
                 form={form}
                 name="control-ref"
-                onFinish={onSubmit}
+                // onFinish={onSubmit}
               >
                 <Form.Item
                   name="username"
@@ -99,7 +118,7 @@ export default () => {
                 {...layout}
                 form={form}
                 name="control-ref"
-                onFinish={onSubmit}
+                onFinish={onSignUpSubmit}
               >
                 <Form.Item
                   name="username"
@@ -122,7 +141,7 @@ export default () => {
                     () => {
                       return {
                         validator: (_, value) => {
-                          console.log(value);
+                          // console.log(value);
                           if (value.includes('@')) {
                             return Promise.resolve();
                           }
