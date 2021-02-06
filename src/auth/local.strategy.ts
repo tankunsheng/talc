@@ -23,10 +23,15 @@ passport.serializeUser(function (user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function (id, done) {
-  console.log(id);
-  done(null, id);
+passport.deserializeUser(function (user, done) {
+  console.log(user);
+  done(null, user);
   // User.findById(id, function (err, user) {
   //   done(err, user);
   // });
+  // console.log(
+  //   `id token expiring at ${new Date(
+  //     user['idToken']['payload']['exp'] * 1000,
+  //   )}`,
+  // );
 });

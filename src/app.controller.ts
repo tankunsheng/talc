@@ -17,7 +17,7 @@ import {
   CognitoUserAttribute,
   CognitoUser,
 } from 'amazon-cognito-identity-js';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 
 const poolData = {
@@ -28,6 +28,15 @@ const userPool = new CognitoUserPool(poolData);
 @Controller('app')
 export class AppController {
   constructor(private readonly appService: AppService) {}
+
+  @Get('/')
+  root(@Req() req: Request) {
+    console.log(
+      `id token expiring at ${new Date(
+        req.user['idToken']['payload']['exp'] * 1000,
+      )}`,
+    );
+  }
 
   @Post('signup')
   async signUp(@Body() signupDto: signupDto): Promise<string> {
@@ -88,16 +97,16 @@ export class AppController {
   @Post('login')
   async login(
     @Res({ passthrough: true }) response: Response,
-    @Req() req: any,
+    @Req() req: Request,
   ): Promise<any> {
     console.log(response);
     console.log(req);
-    const results = new Promise((resolve, reject) => {
+    const results = await new Promise((resolve, reject) => {
       req.logIn(req.user, function (err) {
         if (err) {
           reject(err);
         }
-        resolve(true);
+        resolve(req.user['idToken']['payload']);
       });
     });
     console.log(results);
