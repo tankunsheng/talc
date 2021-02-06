@@ -36,6 +36,9 @@ export class AppController {
         req.user['idToken']['payload']['exp'] * 1000,
       )}`,
     );
+    //if idtoken is not expired, send back user info
+    return req.user;
+    //else refresh with refresh token
   }
 
   @Post('signup')

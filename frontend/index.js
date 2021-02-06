@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import 'antd/dist/antd.css';
 import './src/styles/style.scss';
@@ -14,10 +14,14 @@ const { Header, Content, Sider, Footer } = Layout;
 import axios from './src/libs/axios';
 import { AppContext } from './src/app-context';
 
-axios.get('/app');
-
 const App = () => {
   const [user, setUser] = useState();
+  useEffect(() => {
+    axios.get('/app').then((res) => {
+      setUser(res);
+    });
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
