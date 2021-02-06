@@ -23,13 +23,21 @@ before_script:
   - IMAGE_TAG="$CI_COMMIT_SHORT_SHA"
 
 stages:
-  - build
-  - deploy
+  - build-dev
+  - deploy-dev
 
 build:
-  stage: build
+  stage: build-dev
   script:
     - echo "Building image..."
+    - ls
+    - echo DYNAMODB_SESSIONS_ACCESS_KEY_ID=$DEV_DYNAMODB_SESSIONS_ACCESS_KEY_ID >> .env
+    - echo DYNAMODB_SESSIONS_SECRET_ACCESS_KEY=$DEV_DYNAMODB_SESSIONS_SECRET_ACCESS_KEY >> .env
+    - echo COGNITO_USERPOOL_ID=$DEV_COGNITO_USERPOOL_ID >> .env
+    - echo COGNITO_USERPOOL_APP_ID=$DEV_COGNITO_USERPOOL_APP_ID >> .env
+    - ls
+    - cat .env
+
     - docker build -t $REPOSITORY_URL:latest .
     - echo "Tagging image..."
     - IMAGE_TAG="$CI_COMMIT_SHORT_SHA"
@@ -43,7 +51,7 @@ build:
     - docker
 
 deploy:
-  stage: deploy
+  stage: deploy-dev
   script:
     - apk add --no-cache jq
     - TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$TASK_DEFINITION_NAME" --region "${REGION}")
