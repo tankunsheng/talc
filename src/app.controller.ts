@@ -5,20 +5,20 @@ import {
   Body,
   HttpException,
   HttpStatus,
+  Res,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import 'cross-fetch/polyfill';
-import { signupDto, loginDto } from './dto';
+import { signupDto } from './dto';
 import {
   CognitoUserPool,
   CognitoUserAttribute,
   CognitoUser,
-  AuthenticationDetails,
-  CognitoUserSession,
 } from 'amazon-cognito-identity-js';
-console.log(CognitoUserPool);
-console.log(CognitoUserAttribute);
-console.log(CognitoUser);
+import { Response } from 'express';
+import { AuthGuard } from '@nestjs/passport';
 
 const poolData = {
   UserPoolId: 'ap-southeast-1_r5tpHNIsa', // Your user pool id here
@@ -84,43 +84,28 @@ export class AppController {
     });
     return results;
   }
-
-  @Get('login')
-  async login(@Body() loginDto: loginDto): Promise<CognitoUserSession> {
-    const authenticationDetails = new AuthenticationDetails({
-      Username: loginDto.username,
-      Password: loginDto.password,
-    });
-    const cognitoUser = new CognitoUser({
-      Username: loginDto.username,
-      Pool: userPool,
-    });
-    const result = await new Promise<CognitoUserSession>((resolve, reject) => {
-      cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess: function (session, userConfirmationNecessary) {
-          console.log('login success');
-          console.log(session);
-          console.log(userConfirmationNecessary);
-          resolve(session);
-        },
-        onFailure: function (error) {
-          console.log('login error');
-          console.log(error);
-          reject(error);
-        },
+  @UseGuards(AuthGuard('local'))
+  @Post('login')
+  async login(
+    @Res({ passthrough: true }) response: Response,
+    @Req() req: any,
+  ): Promise<any> {
+    console.log(response);
+    console.log(req);
+    const results = new Promise((resolve, reject) => {
+      req.logIn(req.user, function (err) {
+        if (err) {
+          reject(err);
+        }
+        resolve(true);
       });
-    }).catch((err) => {
-      throw new HttpException('Forbidden', HttpStatus.BAD_REQUEST);
     });
-    return result;
+    console.log(results);
+    return results;
   }
 
   @Get('confirm')
-  confirmSignup(): boolean {
-    // const authenticationDetails = new AuthenticationDetails({
-    //   Username: 'username',
-    //   Password: 'Password123',
-    // });
+  confirmSignup(@Req() req: Request): boolean {
     const cognitoUser = new CognitoUser({
       Username: 'username',
       Pool: userPool,

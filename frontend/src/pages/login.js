@@ -4,13 +4,18 @@ import './about.scss';
 import { Row, Col } from 'antd';
 import { Tabs } from 'antd';
 const { TabPane } = Tabs;
-import { Form, Input, Button, Select, DatePicker, notification } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  DatePicker,
+  notification,
+  message,
+} from 'antd';
 import './login.scss';
 import axios from '../libs/axios';
 
-function callback(key) {
-  // console.log(key);
-}
 const { Option } = Select;
 
 const layout = {
@@ -27,6 +32,7 @@ const tailLayout = {
 
 export default () => {
   const [form] = Form.useForm();
+  const [loginForm] = Form.useForm();
   const history = useHistory();
   const onGenderChange = (value) => {
     switch (value) {
@@ -65,6 +71,27 @@ export default () => {
       openNotification();
     }
   };
+  const onLoginSubmit = async (values) => {
+    console.log(values);
+    const response = await axios
+      .post(
+        'app/login',
+        {
+          ...values,
+        },
+        {
+          withCredentials: true,
+        },
+      )
+      .catch((err) => {
+        console.log(err.response.data.message);
+        message.error(err.response.data.message);
+      });
+    console.log(response);
+    // if (response.status === 201) {
+    //   openNotification();
+    // }
+  };
   const onReset = () => {
     form.resetFields();
   };
@@ -73,14 +100,14 @@ export default () => {
       <Row>
         <Col span={9}></Col>
         <Col span={6}>
-          <Tabs defaultActiveKey="2" onChange={callback}>
+          <Tabs defaultActiveKey="1">
             <TabPane tab="Log In" key="1">
               <Form
                 layout="horizontal"
                 {...loginLayout}
-                form={form}
+                form={loginForm}
                 name="control-ref"
-                // onFinish={onSubmit}
+                onFinish={onLoginSubmit}
               >
                 <Form.Item
                   name="username"
@@ -102,7 +129,7 @@ export default () => {
                     },
                   ]}
                 >
-                  <Input placeholder="password" />
+                  <Input.Password placeholder="password" />
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>

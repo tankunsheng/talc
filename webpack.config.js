@@ -22,7 +22,7 @@ process.env.NODE_ENV = 'development';
 module.exports = {
   // Environment mode
   mode: 'development',
-
+  devtool: 'eval-source-map',
   // Entry point of app
   entry: resolveAppPath('frontend/index.js'),
 
