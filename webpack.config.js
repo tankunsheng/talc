@@ -3,7 +3,8 @@
 const path = require('path');
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const webpack = require('webpack');
+const dotenv = require('dotenv');
 // App directory
 const appDirectory = fs.realpathSync(process.cwd());
 
@@ -17,7 +18,8 @@ const host = process.env.HOST || 'localhost';
 // Required for babel-preset-react-app
 process.env.NODE_ENV = 'development';
 
-// ... imports and variables
+// call dotenv and it will return an Object with a parsed key
+const env = dotenv.config().parsed;
 
 module.exports = {
   // Environment mode
@@ -79,6 +81,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: resolveAppPath('frontend/public/index.html'),
+    }),
+    new webpack.EnvironmentPlugin({
+      API_URL: env.API_URL,
     }),
   ],
 };

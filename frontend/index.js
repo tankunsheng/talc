@@ -12,7 +12,6 @@ import Faqs from './src/pages/faq';
 const { Title } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
 const App = () => {
-  console.log(About);
   return (
     <Router>
       <Layout id="page-container">
