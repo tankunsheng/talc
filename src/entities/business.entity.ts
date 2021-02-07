@@ -30,6 +30,11 @@ export class Business {
   })
   mainContactNumber: string;
 
-  @Column({ type: 'character varying', length: 100, name: 'picture' })
+  @Column({
+    type: 'character varying',
+    length: 100,
+    name: 'picture',
+    nullable: true,
+  })
   picture: string;
 }
