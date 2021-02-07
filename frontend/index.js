@@ -2,30 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import 'antd/dist/antd.css';
 import './src/styles/style.scss';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Typography } from 'antd';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { Typography } from 'antd';
 import Home from './src/pages/home';
 import Login from './src/pages/login';
 import About from './src/pages/about';
 import Faqs from './src/pages/faq';
+import axios from './src/libs/axios';
+import { UserContext, BusinessContext } from './src/app-context';
+import { UserOutlined, EyeOutlined } from '@ant-design/icons';
 const { Title } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
-import axios from './src/libs/axios';
-import { AppContext } from './src/app-context';
+const { SubMenu } = Menu;
 
 const App = () => {
   const [user, setUser] = useState();
+  const [mode, setMode] = useState('user');
   useEffect(() => {
     axios.get('/app').then((res) => {
       setUser(res);
     });
   }, []);
 
-  return (
-    <AppContext.Provider
+  return mode === 'user' ? (
+    <UserContext.Provider
       value={{
-        user: user,
+        user,
+        // user: user,
         setUser,
       }}
     >
@@ -35,18 +38,18 @@ const App = () => {
             style={{ backgroundColor: 'white', padding: '10' }}
             className="header"
           >
-            <AppContext.Consumer>
+            <UserContext.Consumer>
               {({ user }) => {
                 console.log(user);
                 return (
                   <Menu
                     theme="light"
                     mode="horizontal"
-                    defaultSelectedKeys={['2']}
+                    // defaultSelectedKeys={['2']}
                   >
                     <Menu.Item className="logo" style={{ float: 'left' }}>
                       <Title level={4}>
-                        <Link to="/">The Afterlife Company TEST</Link>
+                        <Link to="/">The Afterlife Company</Link>
                       </Title>
                     </Menu.Item>
                     <Menu.Item key="1" style={{ float: 'right' }}>
@@ -60,13 +63,41 @@ const App = () => {
                         <Link to="/login">Log In/Sign Up</Link>
                       </Menu.Item>
                     )}
+                    {user && (
+                      <SubMenu
+                        style={{ float: 'right' }}
+                        key="sub2"
+                        icon={<UserOutlined />}
+                        title="User"
+                      >
+                        <Menu.ItemGroup>
+                          <Menu.Item key="1">Profile</Menu.Item>
+                          <Menu.Item key="2">Log out</Menu.Item>
+                        </Menu.ItemGroup>
+                      </SubMenu>
+                    )}
+                    {user && (
+                      <SubMenu key="sub1" icon={<EyeOutlined />} title="Mode">
+                        <Menu.ItemGroup>
+                          <Menu.Item
+                            key="1"
+                            onClick={() => setMode('business')}
+                          >
+                            Business
+                          </Menu.Item>
+                          <Menu.Item key="2" onClick={() => setMode('user')}>
+                            User
+                          </Menu.Item>
+                        </Menu.ItemGroup>
+                      </SubMenu>
+                    )}
                   </Menu>
                 );
               }}
-            </AppContext.Consumer>
+            </UserContext.Consumer>
           </Header>
           <Layout>
-            <Sider width={200} className="site-layout-background">
+            <Sider width={250} className="site-layout-background">
               <Menu
                 mode="inline"
                 // defaultSelectedKeys={['1']}
@@ -118,7 +149,125 @@ const App = () => {
           </Footer>
         </Layout>
       </Router>
-    </AppContext.Provider>
+    </UserContext.Provider>
+  ) : (
+    <BusinessContext.Provider
+      value={{
+        user,
+        setUser,
+      }}
+    >
+      <Router>
+        <Layout id="page-container">
+          <Header
+            style={{ backgroundColor: 'white', padding: '10' }}
+            className="header"
+          >
+            <BusinessContext.Consumer>
+              {({ user }) => {
+                console.log(user);
+                return (
+                  <Menu
+                    theme="light"
+                    mode="horizontal"
+                    // defaultSelectedKeys={['2']}
+                  >
+                    <Menu.Item className="logo" style={{ float: 'left' }}>
+                      <Title level={4}>
+                        <Link to="/">The Afterlife Company (Business)</Link>
+                      </Title>
+                    </Menu.Item>
+
+                    {!user && (
+                      <Menu.Item key="3" style={{ float: 'right' }}>
+                        <Link to="/login">Log In/Sign Up</Link>
+                      </Menu.Item>
+                    )}
+                    {user && (
+                      <SubMenu
+                        style={{ float: 'right' }}
+                        key="sub2"
+                        icon={<UserOutlined />}
+                        title="User"
+                      >
+                        <Menu.ItemGroup>
+                          <Menu.Item key="1">Profile</Menu.Item>
+                          <Menu.Item key="2">Log out</Menu.Item>
+                        </Menu.ItemGroup>
+                      </SubMenu>
+                    )}
+                    {user && (
+                      <SubMenu
+                        key="sub1"
+                        icon={<EyeOutlined />}
+                        title="Mode"
+                        selectedKeys={[1]}
+                      >
+                        <Menu.ItemGroup>
+                          <Menu.Item
+                            key="1"
+                            onClick={() => setMode('business')}
+                          >
+                            Business
+                          </Menu.Item>
+                          <Menu.Item key="2" onClick={() => setMode('user')}>
+                            User
+                          </Menu.Item>
+                        </Menu.ItemGroup>
+                      </SubMenu>
+                    )}
+                  </Menu>
+                );
+              }}
+            </BusinessContext.Consumer>
+          </Header>
+          <Layout>
+            <Sider width={250} className="site-layout-background">
+              <Menu
+                mode="inline"
+                defaultOpenKeys={['sub1']}
+                style={{ height: '100%', borderRight: 0 }}
+              >
+                <Menu.Item key="1">
+                  <Link to="/about">Business Profile</Link>
+                </Menu.Item>
+                <Menu.Item key="2">
+                  <Link to="/faq/general">My Store</Link>
+                </Menu.Item>
+              </Menu>
+            </Sider>
+            <Layout style={{ padding: '0 24px 24px' }}>
+              <Content
+                className="site-layout-background"
+                style={{
+                  padding: 24,
+                  margin: 0,
+                  minHeight: 280,
+                }}
+              >
+                <Switch>
+                  <Route path="/" exact>
+                    <Home />
+                  </Route>
+                  <Route path="/login" exact>
+                    <Login />
+                  </Route>
+                  <Route path="/about">
+                    <About />
+                  </Route>
+                  <Route path="/faq">
+                    <Faqs />
+                  </Route>
+                </Switch>
+              </Content>
+            </Layout>
+          </Layout>
+          <Footer id="footer" style={{ textAlign: 'center' }}>
+            Ant Design ©2018 Created by Ant UED
+          </Footer>
+        </Layout>
+      </Router>
+    </BusinessContext.Provider>
   );
 };
 

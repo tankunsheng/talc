@@ -1,9 +1,17 @@
 import React from 'react';
-const defaultContextValues = {
+const userContextValues = {
   text: 'test',
   setUser: (user) => {
     console.log(user);
   },
 };
-const AppContext = React.createContext(defaultContextValues);
-export { AppContext };
+const UserContext = React.createContext(userContextValues);
+export { UserContext };
+const adminContextValues = {
+  text: 'test',
+  setUser: (user) => {
+    console.log(user);
+  },
+};
+const BusinessContext = React.createContext(adminContextValues);
+export { BusinessContext };

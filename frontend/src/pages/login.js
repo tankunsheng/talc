@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { AppContext } from '../app-context';
+import { UserContext } from '../app-context';
 import './about.scss';
 import { Row, Col } from 'antd';
 import { Tabs } from 'antd';
@@ -92,7 +92,7 @@ export default () => {
     form.resetFields();
   };
   return (
-    <AppContext.Consumer>
+    <UserContext.Consumer>
       {({ setUser }) => (
         <div>
           <Row>
@@ -249,6 +249,6 @@ export default () => {
           </Row>
         </div>
       )}
-    </AppContext.Consumer>
+    </UserContext.Consumer>
   );
 };
