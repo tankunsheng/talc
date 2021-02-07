@@ -26,7 +26,6 @@ import { User } from './entities/user.entity';
       entities: [Business, User],
     }),
     AuthModule,
-    BusinessModule,
   ],
   controllers: [AppController],
   providers: [AppService],
