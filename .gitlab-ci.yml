@@ -29,16 +29,18 @@ stages:
 build:
   stage: build-dev
   script:
-    - echo "Building image..."
-    - ls
+    - echo "Creating dev .env file"
     - echo DYNAMODB_SESSIONS_ACCESS_KEY_ID=$DEV_DYNAMODB_SESSIONS_ACCESS_KEY_ID >> .env
     - echo DYNAMODB_SESSIONS_SECRET_ACCESS_KEY=$DEV_DYNAMODB_SESSIONS_SECRET_ACCESS_KEY >> .env
     - echo COGNITO_USERPOOL_ID=$DEV_COGNITO_USERPOOL_ID >> .env
     - echo COGNITO_USERPOOL_APP_ID=$DEV_COGNITO_USERPOOL_APP_ID >> .env
     - echo API_URL=$DEV_API_URL >> .env
-    - ls
-    - cat .env
+    - echo DB_HOST=$DEV_DB_HOST >> .env
+    - echo DB_USER=$DEV_DB_USER >> .env
+    - echo DB_PASSWORD=$DEV_DB_PASSWORD >> .env
+    - echo DB_NAME=$DEV_DB_NAME >> .env
 
+    - echo "Building image..."
     - docker build -t $REPOSITORY_URL:latest .
     - echo "Tagging image..."
     - IMAGE_TAG="$CI_COMMIT_SHORT_SHA"
