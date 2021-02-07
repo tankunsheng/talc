@@ -64,11 +64,16 @@ export default () => {
   };
   const onSignUpSubmit = async (values) => {
     console.log(values);
-    const response = await axios.post('app/signup', {
-      ...values,
-    });
+    const response = await axios
+      .post('app/signup', {
+        ...values,
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+        message.error(err.response.data.message);
+      });
     console.log(response);
-    if (response.status === 201) {
+    if (response && response.status === 201) {
       openNotification();
     }
   };
@@ -82,7 +87,7 @@ export default () => {
         message.error(err.response.data.message);
       });
     console.log(response);
-    if (response.status === 201) {
+    if (response && response.status === 201) {
       message.success('Successfuly logged in!');
       setUser(response.data);
       history.push('/');
@@ -138,6 +143,7 @@ export default () => {
                       </Button>
                     </Form.Item>
                   </Form>
+                  Test users: talc_business, talc_user
                 </TabPane>
 
                 <TabPane tab="Sign Up" key="2">
@@ -170,7 +176,7 @@ export default () => {
                           return {
                             validator: (_, value) => {
                               // console.log(value);
-                              if (value.includes('@')) {
+                              if (value.includes('@') && value.length > 5) {
                                 return Promise.resolve();
                               }
                               return Promise.reject(
@@ -190,6 +196,22 @@ export default () => {
                         {
                           required: true,
                           message: 'Please input your password!',
+                        },
+                        () => {
+                          return {
+                            validator: (_, value) => {
+                              if (
+                                !value.match(
+                                  '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})',
+                                )
+                              ) {
+                                return Promise.reject(
+                                  'Password must be at least 8 characters, contains at least 1 lower case, 1 upper case letter and 1 number',
+                                );
+                              }
+                              return Promise.resolve();
+                            },
+                          };
                         },
                       ]}
                     >

@@ -92,7 +92,10 @@ export class AppController {
         },
       );
     }).catch((err) => {
-      throw new HttpException('Forbidden', HttpStatus.BAD_REQUEST);
+      // if (err.code === 'UsernameExistsException') {
+      //   throw new HttpException('Bad Request', HttpStatus.BAD_REQUEST)
+      // }
+      throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
     });
     return results;
   }
