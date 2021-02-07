@@ -9,7 +9,6 @@ import Login from './src/pages/login';
 import About from './src/pages/about';
 import Faqs from './src/pages/faq';
 import axios from './src/libs/axios';
-// import BusinessProfile from './src/pages/bp/businessProfile';
 import { BusinessProfile, Store } from './src/pages/bp';
 import { UserContext, BusinessContext } from './src/app-context';
 import { UserOutlined, EyeOutlined } from '@ant-design/icons';
@@ -25,6 +24,11 @@ const App = () => {
       setUser(res);
     });
   }, []);
+  const logout = async () => {
+    await axios.get('app/logout');
+    window.location = '/';
+    message.success('Successfuly logged out!');
+  };
 
   return mode === 'user' ? (
     <UserContext.Provider
@@ -74,7 +78,9 @@ const App = () => {
                       >
                         <Menu.ItemGroup>
                           <Menu.Item key="1">Profile</Menu.Item>
-                          <Menu.Item key="2">Log out</Menu.Item>
+                          <Menu.Item key="2" onClick={logout}>
+                            Log out
+                          </Menu.Item>
                         </Menu.ItemGroup>
                       </SubMenu>
                     )}

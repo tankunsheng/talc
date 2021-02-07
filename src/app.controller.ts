@@ -119,6 +119,13 @@ export class AppController {
     return results;
   }
 
+  @Get('logout')
+  async logout(@Req() req: Request): Promise<any> {
+    console.log(req);
+    req.logOut();
+    return true;
+  }
+
   @Get('confirm')
   confirmSignup(@Req() req: Request): boolean {
     const cognitoUser = new CognitoUser({
