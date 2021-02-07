@@ -14,7 +14,7 @@ import { User } from './entities/user.entity';
       isGlobal: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname),
+      rootPath: join(__dirname, '..'),
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
