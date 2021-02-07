@@ -9,6 +9,8 @@ import Login from './src/pages/login';
 import About from './src/pages/about';
 import Faqs from './src/pages/faq';
 import axios from './src/libs/axios';
+// import BusinessProfile from './src/pages/bp/businessProfile';
+import { BusinessProfile, Store } from './src/pages/bp';
 import { UserContext, BusinessContext } from './src/app-context';
 import { UserOutlined, EyeOutlined } from '@ant-design/icons';
 const { Title } = Typography;
@@ -229,10 +231,10 @@ const App = () => {
                 style={{ height: '100%', borderRight: 0 }}
               >
                 <Menu.Item key="1">
-                  <Link to="/about">Business Profile</Link>
+                  <Link to="/bp/profile">Business Profile</Link>
                 </Menu.Item>
                 <Menu.Item key="2">
-                  <Link to="/faq/general">My Store</Link>
+                  <Link to="/bp/store">My Store</Link>
                 </Menu.Item>
               </Menu>
             </Sider>
@@ -252,11 +254,11 @@ const App = () => {
                   <Route path="/login" exact>
                     <Login />
                   </Route>
-                  <Route path="/about">
-                    <About />
+                  <Route path="/bp/profile">
+                    <BusinessProfile />
                   </Route>
-                  <Route path="/faq">
-                    <Faqs />
+                  <Route path="/bp/store">
+                    <Store />
                   </Route>
                 </Switch>
               </Content>

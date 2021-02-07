@@ -2,8 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../app-context';
 import './about.scss';
-import { Row, Col } from 'antd';
-import { Tabs } from 'antd';
+import { Row, Col, Tabs } from 'antd';
 const { TabPane } = Tabs;
 import {
   Form,
