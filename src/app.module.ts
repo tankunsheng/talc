@@ -16,6 +16,7 @@ import { User } from './entities/user.entity';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..'),
     }),
+
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
