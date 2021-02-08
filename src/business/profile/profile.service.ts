@@ -19,6 +19,19 @@ export class ProfileService {
     });
     return user.business;
   }
+  async updateBusinessProfile(
+    businessId: string,
+    name: string,
+    description: string,
+    uen: string,
+    email: string,
+    address: string,
+    mainContactName: string,
+    mainContactNumber: string,
+  ): Promise<Business> {
+    //to be implemented
+    return null;
+  }
 
   async createBusinessProfile(
     sub: string,

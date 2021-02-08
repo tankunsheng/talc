@@ -32,24 +32,31 @@ export class ProfileController {
     @Req() req: Request,
   ) {
     console.log(req.user);
-    console.log(businessProfileDto);
-    const sub = req.user['idToken']['payload']['sub'];
-    const businessProfile = await this.profileService.createBusinessProfile(
-      sub,
-      businessProfileDto.name,
-      businessProfileDto.description,
-      businessProfileDto.uen,
-      businessProfileDto.email,
-      businessProfileDto.address,
-      businessProfileDto.mainContactName,
-      businessProfileDto.mainContactNumber,
-    );
-    if (!businessProfile) {
-      throw new HttpException(
-        'Business Profile Creation Failed',
-        HttpStatus.INTERNAL_SERVER_ERROR,
+    console.log(businessProfileDto.businessId);
+    let businessProfile;
+    if (businessProfileDto.businessId) {
+      //update service to be implemented
+      //businessProfile = await this.profileService.updateBusinessProfile()
+    } else {
+      const sub = req.user['idToken']['payload']['sub'];
+      businessProfile = await this.profileService.createBusinessProfile(
+        sub,
+        businessProfileDto.name,
+        businessProfileDto.description,
+        businessProfileDto.uen,
+        businessProfileDto.email,
+        businessProfileDto.address,
+        businessProfileDto.mainContactName,
+        businessProfileDto.mainContactNumber,
       );
+      if (!businessProfile) {
+        throw new HttpException(
+          'Business Profile Creation Failed',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
     }
+
     return businessProfile;
   }
 }
