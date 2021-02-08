@@ -2,6 +2,28 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Business {
+  constructor(
+    businessId: string,
+    name: string,
+    description: string,
+    uen: string,
+    email: string,
+    address: string,
+    mainContactName: string,
+    mainContactNumber: string,
+    picture?: string,
+  ) {
+    this.businessId = businessId;
+    this.name = name;
+    this.description = description;
+    this.uen = uen;
+    this.email = email;
+    this.address = address;
+    this.mainContactNumber = mainContactNumber;
+    this.mainContactName = mainContactName;
+    this.picture = picture;
+  }
+
   @PrimaryColumn({ type: 'character varying', length: 50, name: 'business_id' })
   businessId: string;
 

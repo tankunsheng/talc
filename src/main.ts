@@ -31,7 +31,7 @@ async function bootstrap() {
     session({
       store: new DynamoDBStore(options),
       secret: 'my-secret',
-      // resave: false,
+      resave: false,
       saveUninitialized: false, // <-- dont save failed logins into session to save space and writes
       cookie: {
         // sameSite: 'none',

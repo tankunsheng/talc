@@ -1,15 +1,7 @@
-import React from 'react';
-import {
-  Row,
-  Col,
-  Form,
-  Input,
-  Button,
-  Typography,
-  Select,
-  notification,
-  message,
-} from 'antd';
+import React, { useEffect } from 'react';
+import { Row, Col, Form, Input, Button, Typography, notification } from 'antd';
+import axios from '../../libs/axios';
+
 const { Title } = Typography;
 const layout = {
   labelCol: { span: 10 },
@@ -21,8 +13,24 @@ const tailLayout = {
 
 export default () => {
   const [form] = Form.useForm();
+  useEffect(() => {
+    axios.get('business/profile').then((res) => {
+      console.log(res);
+      form.setFieldsValue(res.data);
+    });
+  }, []);
   const onBusinessProfileSubmit = async (values) => {
     console.log(values);
+    axios.put('business/profile', values).then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        notification.open({
+          message: 'Business profile created',
+          description: `Business profile created/updated for ${res.data.name}`,
+          duration: 10000,
+        });
+      }
+    });
   };
   const onReset = () => {
     form.resetFields();
@@ -42,7 +50,7 @@ export default () => {
             <Row>
               <Col span={12}>
                 <Form.Item
-                  name="businessName"
+                  name="name"
                   label="Business Name"
                   rules={[
                     {
@@ -56,7 +64,7 @@ export default () => {
 
               <Col span={12}>
                 <Form.Item
-                  name="uenNum"
+                  name="uen"
                   label="UEN No."
                   rules={[
                     {
@@ -84,7 +92,7 @@ export default () => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="mainContactNum"
+                  name="mainContactNumber"
                   label="Main Contact Number"
                   rules={[
                     {
@@ -100,7 +108,7 @@ export default () => {
             <Row>
               <Col span={12}>
                 <Form.Item
-                  name="businessAddress"
+                  name="address"
                   label="Business Address"
                   rules={[
                     {
@@ -116,7 +124,7 @@ export default () => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="businessEmail"
+                  name="email"
                   label="Business Email"
                   rules={[
                     {
@@ -131,7 +139,7 @@ export default () => {
             <Row>
               <Col span={24}>
                 <Form.Item
-                  name="businessDescription"
+                  name="description"
                   label="Business Description"
                   rules={[
                     {
