@@ -100,8 +100,8 @@ export default () => {
       {({ setUser }) => (
         <div>
           <Row>
-            <Col span={9}></Col>
-            <Col span={6}>
+            <Col span={6}></Col>
+            <Col span={12}>
               <Tabs defaultActiveKey="1">
                 <TabPane tab="Log In" key="1">
                   <Form
@@ -239,7 +239,7 @@ export default () => {
                       <Input.Password placeholder="confirm password" />
                     </Form.Item>
 
-                    <Form.Item name="dob" label="Date of Birth and Gender">
+                    <Form.Item name="dob" label="Date of Birth and Gender" >
                       <DatePicker placeholder="date of birth" />
                       <Form.Item
                         rules={[
