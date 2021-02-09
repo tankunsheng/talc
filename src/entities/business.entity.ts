@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
+import { User } from '.';
+import { ProductService } from './product.service.entity';
 
 @Entity()
 export class Business {
@@ -59,4 +61,13 @@ export class Business {
     nullable: true,
   })
   picture: string;
+
+  @OneToMany(() => User, (user) => user.business)
+  users: User[];
+
+  @OneToMany(
+    () => ProductService,
+    (productServices) => productServices.business,
+  )
+  productServices: ProductService[];
 }

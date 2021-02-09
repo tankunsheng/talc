@@ -44,7 +44,7 @@ export class User {
   @Column({ type: 'bigint', name: 'datetime_joined' })
   datetimeJoined: number;
 
-  @ManyToOne(() => Business, (business) => business.businessId)
+  @ManyToOne(() => Business, (business) => business.users)
   @JoinColumn({ name: 'business_id' })
   business: Business;
 }

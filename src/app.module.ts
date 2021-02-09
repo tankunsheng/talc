@@ -9,6 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Business } from './entities/business.entity';
 import { User } from './entities/user.entity';
 import { BusinessModule } from './business/business.module';
+import { EntityService } from './entity/entity.service';
+import { EntitiesService } from './entities/entities.service';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -31,6 +33,6 @@ import { BusinessModule } from './business/business.module';
     BusinessModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, EntityService, EntitiesService],
 })
 export class AppModule {}
