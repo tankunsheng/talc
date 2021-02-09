@@ -164,7 +164,7 @@ const App = () => {
             </Layout>
           </Layout>
           <Footer id="footer" style={{ textAlign: 'center' }}>
-            Ant Design ©2018 Created by Ant UED
+            TALC@2020 Created by Quintant
           </Footer>
         </Layout>
       </Router>
@@ -293,7 +293,7 @@ const App = () => {
             </Layout>
           </Layout>
           <Footer id="footer" style={{ textAlign: 'center' }}>
-            Ant Design ©2018 Created by Ant UED
+            TALC@2020 Created by Quintant
           </Footer>
         </Layout>
       </Router>

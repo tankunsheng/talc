@@ -142,7 +142,11 @@ export default () => {
                       </Button>
                     </Form.Item>
                   </Form>
-                  Test users: talc_business, talc_user
+                  Test users:
+                  <ol>
+                    <li>talc_business (business) password: Talc1234</li>
+                    <li>talc_user (user) password: Talc1234</li>
+                  </ol>
                 </TabPane>
 
                 <TabPane tab="Sign Up" key="2">
@@ -153,6 +157,16 @@ export default () => {
                     name="control-ref"
                     onFinish={onSignUpSubmit}
                   >
+                    <p>
+                      {' '}
+                      "Confirmation email can only be sent to registered emails
+                      for now.{' '}
+                      <b>Contact the admin to add your email addresses</b> in
+                      order to test the complete sign up to email confirmation
+                      flow or login with pre-created accounts"
+                    </p>
+
+                    <br />
                     <Form.Item
                       name="username"
                       label="Username"
@@ -238,8 +252,7 @@ export default () => {
                     >
                       <Input.Password placeholder="confirm password" />
                     </Form.Item>
-
-                    <Form.Item name="dob" label="Date of Birth and Gender" >
+                    <Form.Item name="dob" label="Date of Birth and Gender">
                       <DatePicker placeholder="date of birth" />
                       <Form.Item
                         rules={[
@@ -254,7 +267,6 @@ export default () => {
                         </Select>
                       </Form.Item>
                     </Form.Item>
-
                     <Form.Item {...tailLayout}>
                       <Button type="primary" htmlType="submit">
                         Sign Up
