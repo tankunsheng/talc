@@ -1,4 +1,5 @@
 export class businessProfileDto {
+  businessId: string;
   name: string;
   description: string;
   uen: string;

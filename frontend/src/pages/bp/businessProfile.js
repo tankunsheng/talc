@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Form, Input, Button, Typography, notification } from 'antd';
 import axios from '../../libs/axios';
 
@@ -13,22 +13,30 @@ const tailLayout = {
 
 export default () => {
   const [form] = Form.useForm();
+  const [businessId, setBusinessId] = useState();
   useEffect(() => {
     axios.get('business/profile').then((res) => {
       console.log(res);
+      setBusinessId(res.data.businessId);
       form.setFieldsValue(res.data);
     });
   }, []);
   const onBusinessProfileSubmit = async (values) => {
     console.log(values);
+    if (businessId) {
+      values.businessId = businessId;
+    }
     axios.put('business/profile', values).then((res) => {
       console.log(res);
       if (res.status === 200) {
         notification.open({
-          message: 'Business profile created',
-          description: `Business profile created/updated for ${res.data.name}`,
+          message: `Business profile ${businessId ? 'updated' : 'created'}`,
+          description: `Business profile ${
+            businessId ? 'updated' : 'created'
+          } for ${res.data.name}`,
           duration: 10000,
         });
+        setBusinessId(res.data.businessId);
       }
     });
   };
@@ -157,11 +165,13 @@ export default () => {
 
             <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit">
-                Create/Update
+                {businessId ? 'Update' : 'Create'}
               </Button>
-              <Button htmlType="button" onClick={onReset}>
-                Reset
-              </Button>
+              {!businessId && (
+                <Button htmlType="button" onClick={onReset}>
+                  Reset
+                </Button>
+              )}
             </Form.Item>
           </Form>
         </Col>
