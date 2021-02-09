@@ -6,11 +6,15 @@ import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Business } from './entities/business.entity';
-import { User } from './entities/user.entity';
+import {
+  Business,
+  User,
+  ProductService,
+  ProductServiceToCategory,
+  Category,
+  ProductServiceImage,
+} from './entities';
 import { BusinessModule } from './business/business.module';
-import { EntityService } from './entity/entity.service';
-import { EntitiesService } from './entities/entities.service';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -27,12 +31,19 @@ import { EntitiesService } from './entities/entities.service';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Business, User],
+      entities: [
+        Business,
+        User,
+        ProductService,
+        ProductServiceToCategory,
+        Category,
+        ProductServiceImage,
+      ],
     }),
     AuthModule,
     BusinessModule,
   ],
   controllers: [AppController],
-  providers: [AppService, EntityService, EntitiesService],
+  providers: [AppService],
 })
 export class AppModule {}

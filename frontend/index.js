@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import './src/styles/style.scss';
 import { Layout, Menu, Typography } from 'antd';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import Home from './src/pages/home';
 import Login from './src/pages/login';
 import About from './src/pages/about';
@@ -15,6 +16,7 @@ import { UserOutlined, EyeOutlined } from '@ant-design/icons';
 const { Title } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
 const { SubMenu } = Menu;
+const history = createBrowserHistory();
 
 const App = () => {
   const [user, setUser] = useState();
@@ -89,11 +91,20 @@ const App = () => {
                         <Menu.ItemGroup>
                           <Menu.Item
                             key="1"
-                            onClick={() => setMode('business')}
+                            onClick={() => {
+                              setMode('business');
+                              history.push('/bp/store');
+                            }}
                           >
                             Business
                           </Menu.Item>
-                          <Menu.Item key="2" onClick={() => setMode('user')}>
+                          <Menu.Item
+                            key="2"
+                            onClick={() => {
+                              setMode('user');
+                              history.push('/about');
+                            }}
+                          >
                             User
                           </Menu.Item>
                         </Menu.ItemGroup>
@@ -200,7 +211,9 @@ const App = () => {
                       >
                         <Menu.ItemGroup>
                           <Menu.Item key="1">Profile</Menu.Item>
-                          <Menu.Item key="2">Log out</Menu.Item>
+                          <Menu.Item key="2" onClick={logout}>
+                            Log out
+                          </Menu.Item>
                         </Menu.ItemGroup>
                       </SubMenu>
                     )}
@@ -214,11 +227,20 @@ const App = () => {
                         <Menu.ItemGroup>
                           <Menu.Item
                             key="1"
-                            onClick={() => setMode('business')}
+                            onClick={() => {
+                              setMode('business');
+                              history.push('/bp/store');
+                            }}
                           >
                             Business
                           </Menu.Item>
-                          <Menu.Item key="2" onClick={() => setMode('user')}>
+                          <Menu.Item
+                            key="2"
+                            onClick={() => {
+                              setMode('user');
+                              history.push('/about');
+                            }}
+                          >
                             User
                           </Menu.Item>
                         </Menu.ItemGroup>
