@@ -25,14 +25,15 @@ export default () => {
     console.log(values);
     if (businessId) {
       values.businessId = businessId;
-      //do update here instead?
     }
     axios.put('business/profile', values).then((res) => {
       console.log(res);
       if (res.status === 200) {
         notification.open({
-          message: 'Business profile created',
-          description: `Business profile created/updated for ${res.data.name}`,
+          message: `Business profile ${businessId ? 'updated' : 'created'}`,
+          description: `Business profile ${
+            businessId ? 'updated' : 'created'
+          } for ${res.data.name}`,
           duration: 10000,
         });
         setBusinessId(res.data.businessId);

@@ -27,27 +27,32 @@ export class ProfileController {
     return businessProfile;
   }
   @Put()
-  async putProfile(
-    @Body() businessProfileDto: businessProfileDto,
-    @Req() req: Request,
-  ) {
+  async putProfile(@Body() bfDt: businessProfileDto, @Req() req: Request) {
     console.log(req.user);
-    console.log(businessProfileDto.businessId);
+    console.log(bfDt.businessId);
     let businessProfile;
-    if (businessProfileDto.businessId) {
-      //update service to be implemented
-      //businessProfile = await this.profileService.updateBusinessProfile()
+    if (bfDt.businessId) {
+      businessProfile = await this.profileService.updateBusinessProfile(
+        bfDt.businessId,
+        bfDt.name,
+        bfDt.description,
+        bfDt.uen,
+        bfDt.email,
+        bfDt.address,
+        bfDt.mainContactName,
+        bfDt.mainContactNumber,
+      );
     } else {
       const sub = req.user['idToken']['payload']['sub'];
       businessProfile = await this.profileService.createBusinessProfile(
         sub,
-        businessProfileDto.name,
-        businessProfileDto.description,
-        businessProfileDto.uen,
-        businessProfileDto.email,
-        businessProfileDto.address,
-        businessProfileDto.mainContactName,
-        businessProfileDto.mainContactNumber,
+        bfDt.name,
+        bfDt.description,
+        bfDt.uen,
+        bfDt.email,
+        bfDt.address,
+        bfDt.mainContactName,
+        bfDt.mainContactNumber,
       );
       if (!businessProfile) {
         throw new HttpException(
