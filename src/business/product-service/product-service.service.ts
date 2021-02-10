@@ -11,6 +11,15 @@ export class ProductServiceService {
     @InjectRepository(ProductServiceToCategory)
     private psToCategory: Repository<ProductServiceToCategory>,
   ) {}
+
+  async listAllByCategory(
+    category: string,
+  ): Promise<ProductServiceToCategory[]> {
+    return this.psToCategory.find({
+      where: { catName: category },
+    });
+  }
+
   async createProductService(
     productService: ProductService,
   ): Promise<ProductService | boolean> {

@@ -9,6 +9,8 @@ import Home from './src/pages/home';
 import Login from './src/pages/login';
 import About from './src/pages/about';
 import Faqs from './src/pages/faq';
+import ProductServiceDirectory from './src/pages/ps-directory';
+import ProductServiceInCategory from './src/pages/ps-in-category';
 import axios from './src/libs/axios';
 import { BusinessProfile, Store } from './src/pages/bp';
 import { UserContext, BusinessContext } from './src/app-context';
@@ -130,7 +132,7 @@ const App = () => {
                   <Link to="/faq/general">FAQs</Link>
                 </Menu.Item>
                 <Menu.Item key="3">
-                  <Link to="/products">PRODUCTS/SERVICES DIRECTORY</Link>
+                  <Link to="/directory">PRODUCTS/SERVICES DIRECTORY</Link>
                 </Menu.Item>
                 <Menu.Item key="4">
                   <Link to="/obituary">OBITUARY</Link>
@@ -158,6 +160,12 @@ const App = () => {
                   </Route>
                   <Route path="/faq">
                     <Faqs />
+                  </Route>
+                  <Route path="/directory" exact>
+                    <ProductServiceDirectory />
+                  </Route>
+                  <Route path="/directory/:category">
+                    <ProductServiceInCategory />
                   </Route>
                 </Switch>
               </Content>

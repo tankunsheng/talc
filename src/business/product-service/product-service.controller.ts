@@ -6,24 +6,19 @@ import {
   Req,
   HttpException,
   HttpStatus,
+  Param,
 } from '@nestjs/common';
 import { productServiceDto } from '../../dto/productServiceDto';
 import { ProductService, ProductServiceToCategory } from '../../entities';
 import { ProductServiceService } from './product-service.service';
-import { Transaction } from 'typeorm';
 
 @Controller('business/product-service')
 export class ProductServiceController {
   constructor(private productServiceService: ProductServiceService) {}
-  // @Get()
-  // async getProducts(@Req() req: Request) {
-  //   console.log(req.user);
-  //   const sub = req.user['idToken']['payload']['sub'];
-  //   const businessProfile = await this.profileService.getUserBusinessProfile(
-  //     sub,
-  //   );
-  //   return businessProfile;
-  // }
+  @Get(':category')
+  async listAll(@Param() params): Promise<ProductServiceToCategory[]> {
+    return this.productServiceService.listAllByCategory(params.category);
+  }
   @Put()
   async putProfile(@Body() psDto: productServiceDto, @Req() req: Request) {
     console.log(psDto);

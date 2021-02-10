@@ -44,7 +44,7 @@ export class ProfileService {
     const result: Business = await this.businessRepo.save(business);
     return result;
   }
-
+  //TODO refactor to use queryRunner.manager for transactions
   async createBusinessProfile(
     sub: string,
     name: string,

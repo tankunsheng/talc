@@ -36,7 +36,7 @@ export default () => {
       console.log('no business, create a business profile first');
     }
 
-    //do business/profile if no business, serviceproduct  creation
+    //TODO business/profile if no business, serviceproduct creation
   }, []);
   const onSubmit = async (values) => {
     console.log(business);
@@ -155,9 +155,15 @@ export default () => {
                     // onChange={handleChange}
                   >
                     {[
-                      <Option key={'funeral director'}>
-                        {'funeral director'}
-                      </Option>, //how to seed data into db?
+                      //TODO get categories and not hard code, how to seed data into db?
+                      <Option key={'Funeral Director'}>
+                        {'Funeral Director'}
+                      </Option>,
+                      <Option key={'Catering'}>{'Catering'}</Option>,
+                      <Option key={'Legal Services'}>
+                        {'Legal Services'}
+                      </Option>,
+                      <Option key={'Venue Rental'}>{'Venue Rental'}</Option>,
                     ]}
                   </Select>
                 </Form.Item>
