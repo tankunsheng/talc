@@ -3,6 +3,11 @@ import { ProductService } from './product.service.entity';
 import { Category } from './category.entity';
 @Entity()
 export class ProductServiceToCategory {
+  constructor(businessId: string, productServiceName: string, catName: string) {
+    this.businessId = businessId;
+    this.productServiceName = productServiceName;
+    this.catName = catName;
+  }
   @PrimaryColumn({ type: 'character varying', length: 50, name: 'business_id' })
   businessId: string;
 

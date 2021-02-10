@@ -84,6 +84,8 @@ export class ProfileService {
           businessId: businessId,
         },
       });
+      // commit transaction now:
+      await queryRunner.commitTransaction();
     } catch (err) {
       // since we have errors let's rollback changes we made
       await queryRunner.rollbackTransaction();

@@ -10,6 +10,8 @@ import {
   Select,
   InputNumber,
   Upload,
+  message,
+  Radio,
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import axios from '../../libs/axios';
@@ -22,18 +24,38 @@ const layout = {
 const tailLayout = {
   wrapperCol: { offset: 10, span: 16 },
 };
-//name, type, price, description
 export default () => {
   const [form] = Form.useForm();
-  const onBusinessProfileSubmit = async (values) => {
-    notification.open({
-      message: 'To be Implemented',
-      description: '',
-      onClick: () => {
-        console.log('Notification Clicked!');
-      },
-      duration: 0,
-    });
+  const [business, setBusiness] = useState();
+  useEffect(async () => {
+    const response = await axios('business/profile');
+    console.log(`my business is ${response.data}`);
+    if (response.data) {
+      setBusiness(response.data);
+    } else {
+      console.log('no business, create a business profile first');
+    }
+
+    //do business/profile if no business, serviceproduct  creation
+  }, []);
+  const onSubmit = async (values) => {
+    console.log(business);
+    console.log(values);
+    axios
+      .put('business/product-service', {
+        ...values,
+        businessId: business.businessId,
+      })
+      .then((res) => {
+        notification.open({
+          message: `Added ${res.data.name}!`,
+          duration: 5000,
+        });
+        form.resetFields();
+      })
+      .catch((err) => {
+        message.error(err.response.data.message);
+      });
   };
   const onReset = () => {
     form.resetFields();
@@ -59,13 +81,26 @@ export default () => {
       <Row>
         <Col span={6}></Col>
         <Col span={14}>
-          <Title>Store (To Be Implemented)</Title>
+          <Title>Store</Title>
           <Form
             layout="vertical"
             {...layout}
+            initialValues={{ type: 'service', price: 0 }}
             form={form}
-            onFinish={onBusinessProfileSubmit}
+            onFinish={onSubmit}
           >
+            <Row>
+              <Form.Item
+                name="type"
+                label="Type"
+                rules={[{ required: true, message: 'Please pick a type!' }]}
+              >
+                <Radio.Group>
+                  <Radio.Button value="service">Service</Radio.Button>
+                  <Radio.Button value="product">Product</Radio.Button>
+                </Radio.Group>
+              </Form.Item>
+            </Row>
             <Row>
               <Col span={12}>
                 <Form.Item
@@ -92,7 +127,6 @@ export default () => {
                   ]}
                 >
                   <InputNumber
-                    defaultValue={0}
                     formatter={(value) =>
                       `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }
@@ -117,13 +151,13 @@ export default () => {
                     allowClear
                     style={{ width: '100%' }}
                     placeholder="Please select"
-                    defaultValue={['a10', 'c12']}
+                    defaultValue={[]}
                     // onChange={handleChange}
                   >
                     {[
-                      <Option key={'test'}>{'test'}</Option>,
-                      <Option key={'test1'}>{'test1'}</Option>,
-                      <Option key={'test2'}>{'test'}</Option>,
+                      <Option key={'funeral director'}>
+                        {'funeral director'}
+                      </Option>, //how to seed data into db?
                     ]}
                   </Select>
                 </Form.Item>
