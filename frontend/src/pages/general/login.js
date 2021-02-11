@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { UserContext } from '../app-context';
+import { UserContext } from '../../app-context';
 import './about.scss';
 import { Row, Col, Tabs } from 'antd';
 const { TabPane } = Tabs;
@@ -14,7 +14,7 @@ import {
   message,
 } from 'antd';
 import './login.scss';
-import axios from '../libs/axios';
+import axios from '../../libs/axios';
 
 const { Option } = Select;
 

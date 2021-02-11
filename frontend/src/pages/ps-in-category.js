@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams, Link } from 'react-router-dom';
-import './about.scss';
+import './general/about.scss';
 import { Typography, List, Skeleton } from 'antd';
 const { Title } = Typography;
 import axios from '../libs/axios';
