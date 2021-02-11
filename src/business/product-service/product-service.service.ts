@@ -27,6 +27,21 @@ export class ProductServiceService {
     return result
   }
 
+  async getProductServiceInfo(businessId: string, productServiceName: string): Promise<ProductService> {
+    let result: ProductService;
+    try {
+      result = await this.productServiceRepo.findOne({
+        where: {
+          businessId: businessId,
+          name: productServiceName
+        }
+      })
+    } catch (err) {
+      console.log(err)
+    }
+    return result
+  }
+
   async createProductService(
     productService: ProductService,
   ): Promise<ProductService | boolean> {

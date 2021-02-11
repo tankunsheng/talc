@@ -14,11 +14,17 @@ import { ProductServiceService } from './product-service.service';
 
 @Controller('business/product-service')
 export class ProductServiceController {
-  constructor(private productServiceService: ProductServiceService) {}
+  constructor(private productServiceService: ProductServiceService) { }
   @Get(':category')
   async listAll(@Param() params): Promise<ProductServiceToCategory[]> {
     return this.productServiceService.listAllByCategory(params.category);
   }
+
+  @Get(':businessId/:productServiceName')
+  async getProductServiceInfo(@Param() params): Promise<ProductService> {
+    return this.productServiceService.getProductServiceInfo(params.businessId, params.productServiceName);
+  }
+
   @Put()
   async putProfile(@Body() psDto: productServiceDto, @Req() req: Request) {
     console.log(psDto);

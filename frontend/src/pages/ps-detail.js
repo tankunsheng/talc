@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Typography, List, Skeleton } from 'antd';
+import { useParams } from 'react-router-dom';
+import { Typography } from 'antd';
 const { Title } = Typography;
 import axios from '../libs/axios';
 export default () => {
-  let { category, business, productService } = useParams();
-  const [productServices, setProductServices] = useState();
-  // useEffect(() => {
-  //   axios.get(`business/product-service/${category}`).then((res) => {
-  //     console.log(res);
-  //     setProductServices(res.data);
-  //   });
-  // }, []);
-  // const history = useHistory();
+  let { businessId, productService } = useParams();
+  const [productServiceDetail, setProductServiceDetail] = useState();
+  useEffect(() => {
+
+    axios.get(`business/product-service/${businessId}/${productService}`).then((res) => {
+      console.log(res);
+      setProductServiceDetail(res.data);
+    });
+  }, []);
   return (
     <div style={{ "textAlign": "center" }}>
       <Title className="title" level={1}>
         Product details here
       </Title>
-      <p>
-        Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-      </p>
+      {productServiceDetail && <div>
+        <h2>{productServiceDetail.name}</h2>
+        <p> ${productServiceDetail.price}</p>
+        <p>{productServiceDetail.description}</p>
+      </div>}
     </div>
   );
 };

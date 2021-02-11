@@ -34,10 +34,10 @@ export default () => {
             <Skeleton title={true} loading={false} active>
               <List.Item.Meta
                 title={
-                  <Link to={`/directory/${item.catName}/${item.productService.business.name}/${item.productServiceName}`}>{item.productServiceName}</Link>
+                  <Link to={`/directory/${item.catName}/${item.productService.business.businessId}/${item.productServiceName}`}>{item.productServiceName}</Link>
                 }
                 description={
-                  <Link to={`/directory/${item.catName}/${item.productService.business.name}`}>{item.productService.business.name}</Link>
+                  <Link to={`/directory/${item.catName}/${item.productService.business.businessId}`}>{item.productService.business.name}</Link>
                 } />
               {item.productService.description}
               <div>

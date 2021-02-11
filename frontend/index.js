@@ -169,7 +169,7 @@ const App = () => {
                   <Route path="/directory/:category" exact>
                     <ProductServiceInCategory />
                   </Route>
-                  <Route path="/directory/:category/:business/:productService?">
+                  <Route path="/directory/:category/:businessId/:productService?">
                     <BusinessDetail />
                   </Route>
                   {/* <Route path="/directory/:category/:business/:productService">
