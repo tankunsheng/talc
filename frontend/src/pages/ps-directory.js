@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import './about.scss';
 import { Typography, Card, List } from 'antd';
 const { Title } = Typography;
@@ -31,16 +31,14 @@ export default () => {
         dataSource={categories}
         renderItem={(item) => (
           <List.Item>
-            <Card
-              style={{ cursor: 'pointer' }}
-              onClick={() => {
-                console.log(item);
-                history.push(`/directory/${item.name}`);
-              }}
-              title={item.name}
-            >
-              content
-            </Card>
+            <Link to={`/directory/${item.name}`}>
+              <Card
+                style={{ cursor: 'pointer' }}
+                title={item.name}
+              >
+                content
+            </Card>{item.productServiceName}</Link>
+
           </List.Item>
         )}
       />

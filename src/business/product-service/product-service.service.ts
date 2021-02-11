@@ -10,14 +10,21 @@ export class ProductServiceService {
     private productServiceRepo: Repository<ProductService>,
     @InjectRepository(ProductServiceToCategory)
     private psToCategory: Repository<ProductServiceToCategory>,
-  ) {}
+  ) { }
 
   async listAllByCategory(
     category: string,
   ): Promise<ProductServiceToCategory[]> {
-    return this.psToCategory.find({
-      where: { catName: category },
-    });
+    let result: ProductServiceToCategory[];
+    try {
+      result = await this.psToCategory.find({
+        relations: ["productService", "productService.business"],
+        where: { catName: category },
+      });
+    } catch (err) {
+      console.log(err)
+    }
+    return result
   }
 
   async createProductService(

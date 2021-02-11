@@ -11,6 +11,7 @@ import About from './src/pages/about';
 import Faqs from './src/pages/faq';
 import ProductServiceDirectory from './src/pages/ps-directory';
 import ProductServiceInCategory from './src/pages/ps-in-category';
+import ProductServiceDetail from './src/pages/ps-detail';
 import axios from './src/libs/axios';
 import { BusinessProfile, Store } from './src/pages/bp';
 import { UserContext, BusinessContext } from './src/app-context';
@@ -164,8 +165,11 @@ const App = () => {
                   <Route path="/directory" exact>
                     <ProductServiceDirectory />
                   </Route>
-                  <Route path="/directory/:category">
+                  <Route path="/directory/:category" exact>
                     <ProductServiceInCategory />
+                  </Route>
+                  <Route path="/directory/:category/:business/:productService">
+                    <ProductServiceDetail />
                   </Route>
                 </Switch>
               </Content>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import './about.scss';
-import { Typography, Card, List, Avatar, Button, Skeleton } from 'antd';
+import { Typography, List, Skeleton } from 'antd';
 const { Title } = Typography;
 import axios from '../libs/axios';
 export default () => {
@@ -22,53 +22,30 @@ export default () => {
       <List
         className="demo-loadmore-list"
         // loading={initLoading}
-        itemLayout="horizontal"
+        itemLayout="vertical"
         // loadMore={loadMore}
         dataSource={productServices}
         renderItem={(item) => (
-          <List.Item actions={[<a key="list-loadmore-edit">View Profile</a>]}>
-            <Skeleton avatar title={true} loading={false} active>
+
+          <List.Item 
+          // actions={[<a key="list-loadmore-edit">View Profile</a>]}
+          >
+
+            <Skeleton title={true} loading={false} active>
               <List.Item.Meta
-                avatar={
-                  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                }
                 title={
-                  <a href="https://ant.design">{item.productServiceName}</a>
+                  <Link to={`/directory/${item.catName}/${item.productService.business.name}/${item.productServiceName}`}>{item.productServiceName}</Link>
                 }
-                description="Description here"
-              />
-              <div>content</div>
+                description={
+                  <Link to={`/directory/${item.catName}/${item.productService.business.name}`}>{item.productService.business.name}</Link>
+                } />
+              {item.productService.description}
+              <div>
+              </div>
             </Skeleton>
           </List.Item>
         )}
       />
-      {/* <List
-        grid={{
-          gutter: 16,
-          xs: 1,
-          sm: 2,
-          md: 4,
-          lg: 4,
-          xl: 6,
-          xxl: 6,
-        }}
-        dataSource={productServices}
-        renderItem={(item) => (
-          <List.Item>
-            <Card
-              style={{ cursor: 'pointer' }}
-              onClick={() => {
-                console.log(item);
-                history.push(`/directory/${item.name}`);
-              }}
-              title={item.productServiceName}
-            >
-              content
-            </Card>
-          </List.Item>
-        )}
-      /> */}
-      ,
     </div>
   );
 };
