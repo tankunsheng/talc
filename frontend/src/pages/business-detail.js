@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Typography } from 'antd';
 import ProductServiceDetail from './ps-detail'
 const { Title } = Typography;
@@ -16,16 +16,26 @@ export default () => {
             setBusiness(res.data);
         });
     }, []);
+    const createLinkBreadcrumbs = () => {
+        return <div>
+            <Link to={`/directory/${category}`}>{category}</Link> 
+            {" > "}
+            <Link to={`/directory/${category}/${business.businessId}`}>{business.name}</Link>
+            {productServiceNavText && " > "}
+            {productServiceNavText && <Link to={`/directory/${category}/${business.businessId}/${productService}`}>{productService}</Link>}
+        </div>
+    }
     return (
         <div style={{ "textAlign": "center" }}>
             <Title className="title" level={1}>
                 {`${category} `}
             </Title>
             <Title style={{ "textAlign": "left" }} level={4}>
-                {`${category} > ${business.name} ${productServiceNavText}`}
+                {createLinkBreadcrumbs()}
             </Title>
             <Title className="title" level={2}>
                 {business.name}
+
             </Title>
             {
                 productService ? <ProductServiceDetail />
