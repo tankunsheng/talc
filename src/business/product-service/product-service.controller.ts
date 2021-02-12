@@ -7,7 +7,11 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  Post,
+  UseInterceptors,
+  UploadedFiles,
 } from '@nestjs/common';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { productServiceDto } from '../../dto/productServiceDto';
 import { ProductService, ProductServiceToCategory } from '../../entities';
 import { ProductServiceService } from './product-service.service';
@@ -27,11 +31,22 @@ export class ProductServiceController {
       params.productServiceName,
     );
   }
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('filess'))
+  async postImagesToProductService(@UploadedFiles() files) {
+    console.log(files);
+  }
+  @Post('upload/files')
+  @UseInterceptors(FilesInterceptor('filess'))
+  async postImagesToProductServices(@UploadedFiles() files) {
+    console.log(files);
+  }
 
+  //TODO send bussinessId as path parameter instead of body
   @Put()
   async putProfile(@Body() psDto: productServiceDto, @Req() req: Request) {
-    console.log(psDto);
-    console.log(psDto);
+    // console.log(psDto);
+    // console.log(psDto);
     const psCategories: ProductServiceToCategory[] = psDto.categories.map(
       (eachPSCat) => {
         return new ProductServiceToCategory(

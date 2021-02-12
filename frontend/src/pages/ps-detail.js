@@ -7,22 +7,25 @@ export default () => {
   let { businessId, productService } = useParams();
   const [productServiceDetail, setProductServiceDetail] = useState();
   useEffect(() => {
-
-    axios.get(`business/product-service/${businessId}/${productService}`).then((res) => {
-      console.log(res);
-      setProductServiceDetail(res.data);
-    });
+    axios
+      .get(`business/product-service/${businessId}/${productService}`)
+      .then((res) => {
+        console.log(res);
+        setProductServiceDetail(res.data);
+      });
   }, []);
   return (
-    <div style={{ "textAlign": "center" }}>
+    <div style={{ textAlign: 'center' }}>
       <Title className="title" level={1}>
         Product details here
       </Title>
-      {productServiceDetail && <div>
-        <h2>{productServiceDetail.name}</h2>
-        <p> ${productServiceDetail.price}</p>
-        <p>{productServiceDetail.description}</p>
-      </div>}
+      {productServiceDetail && (
+        <div>
+          <h2>{productServiceDetail.name}</h2>
+          <p> ${productServiceDetail.price}</p>
+          <p>{productServiceDetail.description}</p>
+        </div>
+      )}
     </div>
   );
 };
