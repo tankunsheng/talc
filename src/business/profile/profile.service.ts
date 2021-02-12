@@ -11,7 +11,7 @@ export class ProfileService {
     private userRepo: Repository<User>,
     @InjectRepository(Business)
     private businessRepo: Repository<Business>,
-  ) { }
+  ) {}
   async getUserBusinessProfile(sub: string): Promise<Business> {
     const user = await this.userRepo.findOne({
       where: { sub: sub },
@@ -20,13 +20,13 @@ export class ProfileService {
     return user.business;
   }
   async getBusinessProfileById(businessId: string): Promise<Business> {
-    let business: Business
+    let business: Business;
     try {
       business = await this.businessRepo.findOne({
-        where: { businessId: businessId }
+        where: { businessId: businessId },
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
     return business;
   }

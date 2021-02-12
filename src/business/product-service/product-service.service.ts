@@ -10,7 +10,7 @@ export class ProductServiceService {
     private productServiceRepo: Repository<ProductService>,
     @InjectRepository(ProductServiceToCategory)
     private psToCategory: Repository<ProductServiceToCategory>,
-  ) { }
+  ) {}
 
   async listAllByCategory(
     category: string,
@@ -18,28 +18,31 @@ export class ProductServiceService {
     let result: ProductServiceToCategory[];
     try {
       result = await this.psToCategory.find({
-        relations: ["productService", "productService.business"],
+        relations: ['productService', 'productService.business'],
         where: { catName: category },
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-    return result
+    return result;
   }
 
-  async getProductServiceInfo(businessId: string, productServiceName: string): Promise<ProductService> {
+  async getProductServiceInfo(
+    businessId: string,
+    productServiceName: string,
+  ): Promise<ProductService> {
     let result: ProductService;
     try {
       result = await this.productServiceRepo.findOne({
         where: {
           businessId: businessId,
-          name: productServiceName
-        }
-      })
+          name: productServiceName,
+        },
+      });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-    return result
+    return result;
   }
 
   async createProductService(

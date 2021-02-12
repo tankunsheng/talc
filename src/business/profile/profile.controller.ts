@@ -17,7 +17,7 @@ import { businessProfileDto } from '../../dto/businessProfileDto';
 @UseGuards(AuthGuard)
 @Controller('business/profile')
 export class ProfileController {
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService) {}
   @Get()
   async getProfile(@Req() req: Request) {
     console.log(req.user);
@@ -29,8 +29,8 @@ export class ProfileController {
   }
   @Get(':businessId')
   async getProfileByBusinessId(@Param() params) {
-    console.log(params.businessId)
-    return await this.profileService.getBusinessProfileById(params.businessId)
+    console.log(params.businessId);
+    return await this.profileService.getBusinessProfileById(params.businessId);
   }
   @Put()
   async putProfile(@Body() bfDt: businessProfileDto, @Req() req: Request) {

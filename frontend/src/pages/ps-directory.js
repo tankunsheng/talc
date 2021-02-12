@@ -32,13 +32,11 @@ export default () => {
         renderItem={(item) => (
           <List.Item>
             <Link to={`/directory/${item.name}`}>
-              <Card
-                style={{ cursor: 'pointer' }}
-                title={item.name}
-              >
+              <Card style={{ cursor: 'pointer' }} title={item.name}>
                 content
-            </Card>{item.productServiceName}</Link>
-
+              </Card>
+              {item.productServiceName}
+            </Link>
           </List.Item>
         )}
       />

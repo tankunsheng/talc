@@ -26,22 +26,28 @@ export default () => {
         // loadMore={loadMore}
         dataSource={productServices}
         renderItem={(item) => (
-
-          <List.Item 
+          <List.Item
           // actions={[<a key="list-loadmore-edit">View Profile</a>]}
           >
-
             <Skeleton title={true} loading={false} active>
               <List.Item.Meta
                 title={
-                  <Link to={`/directory/${item.catName}/${item.productService.business.businessId}/${item.productServiceName}`}>{item.productServiceName}</Link>
+                  <Link
+                    to={`/directory/${item.catName}/${item.productService.business.businessId}/${item.productServiceName}`}
+                  >
+                    {item.productServiceName}
+                  </Link>
                 }
                 description={
-                  <Link to={`/directory/${item.catName}/${item.productService.business.businessId}`}>{item.productService.business.name}</Link>
-                } />
+                  <Link
+                    to={`/directory/${item.catName}/${item.productService.business.businessId}`}
+                  >
+                    {item.productService.business.name}
+                  </Link>
+                }
+              />
               {item.productService.description}
-              <div>
-              </div>
+              <div></div>
             </Skeleton>
           </List.Item>
         )}

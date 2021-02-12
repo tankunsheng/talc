@@ -57,7 +57,7 @@ const App = () => {
                   <Menu
                     theme="light"
                     mode="horizontal"
-                  // defaultSelectedKeys={['2']}
+                    // defaultSelectedKeys={['2']}
                   >
                     <Menu.Item className="logo" style={{ float: 'left' }}>
                       <Title level={4}>
@@ -175,7 +175,6 @@ const App = () => {
                   {/* <Route path="/directory/:category/:business/:productService">
                     <ProductServiceDetail />
                   </Route> */}
-
                 </Switch>
               </Content>
             </Layout>
@@ -187,135 +186,135 @@ const App = () => {
       </Router>
     </UserContext.Provider>
   ) : (
-      <BusinessContext.Provider
-        value={{
-          user,
-          setUser,
-        }}
-      >
-        <Router>
-          <Layout id="page-container">
-            <Header
-              style={{ backgroundColor: 'white', padding: '10' }}
-              className="header"
-            >
-              <BusinessContext.Consumer>
-                {({ user }) => {
-                  console.log(user);
-                  return (
-                    <Menu
-                      theme="light"
-                      mode="horizontal"
+    <BusinessContext.Provider
+      value={{
+        user,
+        setUser,
+      }}
+    >
+      <Router>
+        <Layout id="page-container">
+          <Header
+            style={{ backgroundColor: 'white', padding: '10' }}
+            className="header"
+          >
+            <BusinessContext.Consumer>
+              {({ user }) => {
+                console.log(user);
+                return (
+                  <Menu
+                    theme="light"
+                    mode="horizontal"
                     // defaultSelectedKeys={['2']}
-                    >
-                      <Menu.Item className="logo" style={{ float: 'left' }}>
-                        <Title level={4}>
-                          <Link to="/">The Afterlife Company (Business)</Link>
-                        </Title>
-                      </Menu.Item>
+                  >
+                    <Menu.Item className="logo" style={{ float: 'left' }}>
+                      <Title level={4}>
+                        <Link to="/">The Afterlife Company (Business)</Link>
+                      </Title>
+                    </Menu.Item>
 
-                      {!user && (
-                        <Menu.Item key="3" style={{ float: 'right' }}>
-                          <Link to="/login">Log In/Sign Up</Link>
-                        </Menu.Item>
-                      )}
-                      {user && (
-                        <SubMenu
-                          style={{ float: 'right' }}
-                          key="sub2"
-                          icon={<UserOutlined />}
-                          title="User"
-                        >
-                          <Menu.ItemGroup>
-                            <Menu.Item key="1">Profile</Menu.Item>
-                            <Menu.Item key="2" onClick={logout}>
-                              Log out
+                    {!user && (
+                      <Menu.Item key="3" style={{ float: 'right' }}>
+                        <Link to="/login">Log In/Sign Up</Link>
+                      </Menu.Item>
+                    )}
+                    {user && (
+                      <SubMenu
+                        style={{ float: 'right' }}
+                        key="sub2"
+                        icon={<UserOutlined />}
+                        title="User"
+                      >
+                        <Menu.ItemGroup>
+                          <Menu.Item key="1">Profile</Menu.Item>
+                          <Menu.Item key="2" onClick={logout}>
+                            Log out
                           </Menu.Item>
-                          </Menu.ItemGroup>
-                        </SubMenu>
-                      )}
-                      {user && (
-                        <SubMenu
-                          key="sub1"
-                          icon={<EyeOutlined />}
-                          title="Mode"
-                          selectedKeys={[1]}
-                        >
-                          <Menu.ItemGroup>
-                            <Menu.Item
-                              key="1"
-                              onClick={() => {
-                                setMode('business');
-                                history.push('/bp/store');
-                              }}
-                            >
-                              Business
+                        </Menu.ItemGroup>
+                      </SubMenu>
+                    )}
+                    {user && (
+                      <SubMenu
+                        key="sub1"
+                        icon={<EyeOutlined />}
+                        title="Mode"
+                        selectedKeys={[1]}
+                      >
+                        <Menu.ItemGroup>
+                          <Menu.Item
+                            key="1"
+                            onClick={() => {
+                              setMode('business');
+                              history.push('/bp/store');
+                            }}
+                          >
+                            Business
                           </Menu.Item>
-                            <Menu.Item
-                              key="2"
-                              onClick={() => {
-                                setMode('user');
-                                history.push('/about');
-                              }}
-                            >
-                              User
+                          <Menu.Item
+                            key="2"
+                            onClick={() => {
+                              setMode('user');
+                              history.push('/about');
+                            }}
+                          >
+                            User
                           </Menu.Item>
-                          </Menu.ItemGroup>
-                        </SubMenu>
-                      )}
-                    </Menu>
-                  );
+                        </Menu.ItemGroup>
+                      </SubMenu>
+                    )}
+                  </Menu>
+                );
+              }}
+            </BusinessContext.Consumer>
+          </Header>
+          <Layout>
+            <Sider width={250} className="site-layout-background">
+              <Menu
+                mode="inline"
+                defaultOpenKeys={['sub1']}
+                style={{ height: '100%', borderRight: 0 }}
+              >
+                <Menu.Item key="1">
+                  <Link to="/bp/profile">Business Profile</Link>
+                </Menu.Item>
+                <Menu.Item key="2">
+                  <Link to="/bp/store">My Store</Link>
+                </Menu.Item>
+              </Menu>
+            </Sider>
+            <Layout style={{ padding: '0 24px 24px' }}>
+              <Content
+                className="site-layout-background"
+                style={{
+                  padding: 24,
+                  margin: 0,
+                  minHeight: 280,
                 }}
-              </BusinessContext.Consumer>
-            </Header>
-            <Layout>
-              <Sider width={250} className="site-layout-background">
-                <Menu
-                  mode="inline"
-                  defaultOpenKeys={['sub1']}
-                  style={{ height: '100%', borderRight: 0 }}
-                >
-                  <Menu.Item key="1">
-                    <Link to="/bp/profile">Business Profile</Link>
-                  </Menu.Item>
-                  <Menu.Item key="2">
-                    <Link to="/bp/store">My Store</Link>
-                  </Menu.Item>
-                </Menu>
-              </Sider>
-              <Layout style={{ padding: '0 24px 24px' }}>
-                <Content
-                  className="site-layout-background"
-                  style={{
-                    padding: 24,
-                    margin: 0,
-                    minHeight: 280,
-                  }}
-                >
-                  <Switch>
-                    <Route path="/" exact>
-                      <Home />
-                    </Route>
-                    <Route path="/login" exact>
-                      <Login />
-                    </Route>
-                    <Route path="/bp/profile">
-                      <BusinessProfile />
-                    </Route>
-                    <Route path="/bp/store">
-                      <Store />
-                    </Route>
-                  </Switch>
-                </Content>
-              </Layout>
+              >
+                <Switch>
+                  <Route path="/" exact>
+                    <Home />
+                  </Route>
+                  <Route path="/login" exact>
+                    <Login />
+                  </Route>
+                  <Route path="/bp/profile">
+                    <BusinessProfile />
+                  </Route>
+                  <Route path="/bp/store">
+                    <Store />
+                  </Route>
+                </Switch>
+              </Content>
             </Layout>
-            <Footer id="footer" style={{ textAlign: 'center' }}>
-              TALC@2020 Created by Quintant
-          </Footer>
           </Layout>
-        </Router>
-      </BusinessContext.Provider>
-    );
+          <Footer id="footer" style={{ textAlign: 'center' }}>
+            TALC@2020 Created by Quintant
+          </Footer>
+        </Layout>
+      </Router>
+    </BusinessContext.Provider>
+  );
 };
 
 render(<App />, document.getElementById('root'));
