@@ -62,7 +62,7 @@ const App = () => {
                   >
                     <Menu.Item className="logo" style={{ float: 'left' }}>
                       <Title level={4}>
-                        <Link to="/">The Afterlife Company</Link>
+                        <Link to="/">The Afterlife Company (User)</Link>
                       </Title>
                     </Menu.Item>
                     <Menu.Item key="1" style={{ float: 'right' }}>
@@ -141,7 +141,7 @@ const App = () => {
                   <Link to="/obituary">OBITUARY</Link>
                 </Menu.Item>
                 <Menu.Item key="5">
-                  <Link to="/contactus">Contact Us</Link>
+                  <Link to="/contactus">CONTACT US</Link>
                 </Menu.Item>
               </Menu>
             </Sider>
