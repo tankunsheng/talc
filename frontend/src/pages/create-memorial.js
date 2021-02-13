@@ -84,7 +84,15 @@ export default () => {
       <Row>
         <Col span={14} offset={6}>
           <Title>Create Memorial</Title>
-          <Form layout="vertical" {...layout} form={form} onFinish={onSubmit}>
+          <Form
+            layout="vertical"
+            {...layout}
+            form={form}
+            onFinish={onSubmit}
+            validateMessages={{
+              required: "'${label}' is Required!",
+            }}
+          >
             <Row gutter={[8]}>
               <Col span={12}>
                 <Form.Item
