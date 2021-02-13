@@ -19,7 +19,7 @@ import { businessProfileDto } from '../../dto/businessProfileDto';
 export class ProfileController {
   constructor(private profileService: ProfileService) {}
   @Get()
-  async getProfile(@Req() req: Request) {
+  async getUserBusinessProfile(@Req() req: Request) {
     console.log(req.user);
     const sub = req.user['idToken']['payload']['sub'];
     const businessProfile = await this.profileService.getUserBusinessProfile(
@@ -33,7 +33,10 @@ export class ProfileController {
     return await this.profileService.getBusinessProfileById(params.businessId);
   }
   @Put()
-  async putProfile(@Body() bfDt: businessProfileDto, @Req() req: Request) {
+  async putUserBusinessProfile(
+    @Body() bfDt: businessProfileDto,
+    @Req() req: Request,
+  ) {
     console.log(req.user);
     console.log(bfDt.businessId);
     let businessProfile;

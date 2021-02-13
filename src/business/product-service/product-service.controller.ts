@@ -3,7 +3,6 @@ import {
   Put,
   Body,
   Get,
-  Req,
   HttpException,
   HttpStatus,
   Param,
@@ -11,7 +10,7 @@ import {
   UseInterceptors,
   UploadedFiles,
 } from '@nestjs/common';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { productServiceDto } from '../../dto/productServiceDto';
 import {
   ProductService,

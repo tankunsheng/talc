@@ -31,8 +31,9 @@ export default () => {
       if (res.status === 200) {
         notification.open({
           message: `Business profile ${businessId ? 'updated' : 'created'}`,
-          description: `Business profile ${businessId ? 'updated' : 'created'
-            } for ${res.data.name}`,
+          description: `Business profile ${
+            businessId ? 'updated' : 'created'
+          } for ${res.data.name}`,
           duration: 10000,
         });
         setBusinessId(res.data.businessId);
@@ -62,7 +63,7 @@ export default () => {
                   rules={[
                     {
                       required: true,
-                      max: 100
+                      max: 100,
                     },
                   ]}
                 >
@@ -77,7 +78,7 @@ export default () => {
                   rules={[
                     {
                       required: true,
-                      max: 50
+                      max: 50,
                     },
                   ]}
                 >
@@ -124,7 +125,7 @@ export default () => {
                   rules={[
                     {
                       required: true,
-                      max: 100
+                      max: 100,
                     },
                   ]}
                 >
@@ -157,7 +158,7 @@ export default () => {
                   rules={[
                     {
                       required: true,
-                      max: 500
+                      max: 500,
                     },
                   ]}
                 >

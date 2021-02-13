@@ -24,6 +24,10 @@ export class ProfileService {
     try {
       business = await this.businessRepo.findOne({
         where: { businessId: businessId },
+        relations: [
+          'productServices',
+          'productServices.productServiceToCategories',
+        ],
       });
     } catch (err) {
       console.log(err);
