@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Business } from './business.entity';
 import { ProductServiceToCategory } from './product.service.to.category.entity';
+import { ProductServiceImage } from '.';
 @Entity()
 export class ProductService {
   constructor(
@@ -17,6 +18,7 @@ export class ProductService {
     description: string,
     price: number,
     psCategories: ProductServiceToCategory[],
+    psImages?: ProductServiceImage[],
   ) {
     this.businessId = businessId;
     this.name = name;
@@ -24,6 +26,7 @@ export class ProductService {
     this.description = description;
     this.price = price;
     this.productServiceToCategories = psCategories;
+    this.productServiceImages = psImages;
   }
 
   @PrimaryColumn({ type: 'character varying', length: 50, name: 'business_id' })
@@ -47,4 +50,7 @@ export class ProductService {
 
   @OneToMany(() => ProductServiceToCategory, (psCat) => psCat.productService)
   productServiceToCategories: ProductServiceToCategory[];
+
+  @OneToMany(() => ProductServiceImage, (psImages) => psImages.productService)
+  productServiceImages: ProductServiceImage[];
 }

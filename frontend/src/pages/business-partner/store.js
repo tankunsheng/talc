@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -13,8 +14,9 @@ import {
   message,
   Radio,
   Modal,
+  Empty,
 } from 'antd';
-import { InboxOutlined, UploadOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import axios from '../../libs/axios';
 
 const { Title } = Typography;
@@ -25,15 +27,6 @@ const layout = {
 const tailLayout = {
   wrapperCol: { offset: 10, span: 16 },
 };
-const fileList = [
-  // {
-  //   uid: '-4',
-  //   name: 'image.png',
-  //   status: 'done',
-  //   url:
-  //     'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  // },
-];
 export default () => {
   const [form] = Form.useForm();
   const [business, setBusiness] = useState();
@@ -48,97 +41,66 @@ export default () => {
     } else {
       console.log('no business, create a business profile first');
     }
-    setImageList(fileList);
-    //TODO business/profile if no business, serviceproduct creation
   }, []);
   const onSubmit = async (values) => {
     console.log(business);
     console.log(values);
-    axios
-      .put('business/product-service', {
-        ...values,
-        businessId: business.businessId,
-      })
-      .then((res) => {
-        notification.open({
-          message: `Added ${res.data.name}!`,
-          duration: 5000,
-        });
-        form.resetFields();
-      })
-      .catch((err) => {
-        message.error(err.response.data.message);
-      });
+
     //https://stackoverflow.com/questions/51514757/action-function-is-required-with-antd-upload-control-but-i-dont-need-it
     let formData = new FormData();
     imageList.forEach((file) => {
-      // formData.append('filess[]', file.originFileObj, file.name);
-      // console.log(file);
-      formData.append('filess', file.originFileObj, file.name);
-      // formData.append('files', 'dsadas');
+      formData.append('images', file.originFileObj, file.name);
     });
-    // for (var key of formData.entries()) {
-    //   console.log(key[1]);
-    //   console.log(key[0] + ', ' + JSON.stringify(key[1]));
-    // }
     console.log(...formData);
-    axios
-      .post(`/business/product-service/upload`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+    const imageUploadResponse = await axios
+      .post(
+        `/business/product-service/${business.businessId}/${values.name}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         },
-      })
-      .then((res) => {
-        console.log(`file upload response ${res}`);
+      )
+      .catch((err) => {
+        console.log(err);
+        message.error(err.response.data.message);
       });
-    axios
-      .post(`/business/product-service/upload/files`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      .then((res) => {
-        console.log(`file upload response ${res}`);
-      });
-
-    // fetch(
-    //   `http://localhost:3000/business/product-service/${business.businessId}/${values.name}`,
-    //   {
-    //     body: formData,
-    //     method: 'post',
-    //   },
-    // );
-    // fetch(
-    //   `http://localhost:3000/business/product-service/${business.businessId}/${values.name}/asdasd`,
-    //   {
-    //     body: formData,
-    //     method: 'post',
-    //   },
-    // );
-
-    // You can use any AJAX library you like
-    // reqwest({
-    //   url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    //   method: 'post',
-    //   processData: false,
-    //   data: formData,
-    //   success: () => {
-    //     this.setState({
-    //       fileList: [],
-    //       uploading: false,
-    //     });
-    //     message.success('upload successfully.');
-    //   },
-    //   error: () => {
-    //     this.setState({
-    //       uploading: false,
-    //     });
-    //     message.error('upload failed.');
-    //   },
-    // });
+    if (imageUploadResponse) {
+      axios
+        .put('business/product-service', {
+          ...values,
+          businessId: business.businessId,
+          imageLinks: imageUploadResponse.data.map(
+            (eachImage) => eachImage.Location,
+          ),
+        })
+        .then((res) => {
+          notification.open({
+            message: `Added ${res.data.name}!`,
+            duration: 5000,
+          });
+          form.resetFields();
+          setImageList([]);
+        })
+        .catch((err) => {
+          message.error(err.response.data.message);
+        });
+    }
   };
   const onReset = () => {
     form.resetFields();
+  };
+  const checkFile = (file) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('You can only upload JPG/PNG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error('Image must smaller than 2MB!');
+    }
+    return isJpgOrPng && isLt2M;
   };
   const getBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -152,20 +114,15 @@ export default () => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
-
-    // this.setState({
-    //   previewImage: file.url || file.preview,
-    //   previewVisible: true,
-    //   previewTitle:
-    //     file.name || file.url.substring(file.url.lastIndexOf('/') + 1),
-    // });
     setPreviewImage(file.url || file.preview);
     setPreviewVisisble(true);
   };
   const handleCancel = () => setPreviewVisisble(false);
-  const handleChange = ({ fileList }) => {
+  const handleChange = ({ file, fileList }) => {
+    if (file.status === 'done' && checkFile(file)) {
+      setImageList(imageList.concat([file]));
+    }
     console.log(fileList);
-    setImageList(fileList);
   };
 
   const uploadButton = (
@@ -174,7 +131,24 @@ export default () => {
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
-  return (
+  const noBusinessProfile = (
+    <Empty
+      image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+      imageStyle={{
+        height: 60,
+      }}
+      description={
+        //TODO set selectedKeys of left menu bar to set to business profile highlighted on click
+        <span>
+          You need to <Link to="/bp/profile">register a business profile</Link>{' '}
+          before you can setup your store
+        </span>
+      }
+    ></Empty>
+  );
+  return !business ? (
+    noBusinessProfile
+  ) : (
     <div>
       <Row>
         <Col span={6}></Col>
@@ -193,7 +167,7 @@ export default () => {
                 label="Type"
                 rules={[
                   {
-                    //  required: true,
+                    required: true,
                     message: 'Please pick a type!',
                   },
                 ]}
@@ -211,7 +185,7 @@ export default () => {
                   label="Service Name"
                   rules={[
                     {
-                      // required: true,
+                      required: true,
                     },
                   ]}
                 >
@@ -223,11 +197,11 @@ export default () => {
                 <Form.Item
                   name="price"
                   label="Price"
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //   },
-                  // ]}
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
                 >
                   <InputNumber
                     formatter={(value) =>
@@ -245,7 +219,7 @@ export default () => {
                   label="Categories"
                   rules={[
                     {
-                      // required: true,
+                      required: true,
                     },
                   ]}
                 >
@@ -255,10 +229,9 @@ export default () => {
                     style={{ width: '100%' }}
                     placeholder="Please select"
                     defaultValue={[]}
-                    // onChange={handleChange}
                   >
                     {[
-                      //TODO get categories and not hard code, how to seed data into db?
+                      //TODO fetch categories from db instead of hardcoding
                       <Option key={'Funeral Director'}>
                         {'Funeral Director'}
                       </Option>,
@@ -280,7 +253,7 @@ export default () => {
                   label="Service Description"
                   rules={[
                     {
-                      // required: true,
+                      required: true,
                     },
                   ]}
                 >
@@ -303,11 +276,10 @@ export default () => {
                 }}
                 onChange={handleChange}
               >
-                {imageList.length >= 8 ? null : uploadButton}
+                {imageList.length > 4 ? null : uploadButton}
               </Upload>
               <Modal
                 visible={previewVisible}
-                title={'test'}
                 footer={null}
                 onCancel={handleCancel}
               >

@@ -39,7 +39,7 @@ npm run typeorm migration:generate -- -n {scriptname}
 # run all pending migrations
 npm run typeorm migration:run
 # revert the most recently executed migration
-npm run typeorm migration:migration:revert
+npm run typeorm migration:revert
 # refer to https://typeorm.io/#/using-cli/installing-cli for more typeorm cli docs
 ```
 references: 

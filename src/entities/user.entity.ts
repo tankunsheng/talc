@@ -2,6 +2,20 @@ import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Business } from './business.entity';
 @Entity()
 export class User {
+  constructor(
+    sub: string,
+    role: string,
+    username: string,
+    email: string,
+    datetimeJoined: number,
+  ) {
+    this.sub = sub;
+    this.role = role;
+    this.username = username;
+    this.email = email;
+    this.datetimeJoined = datetimeJoined;
+  }
+
   @PrimaryColumn({ type: 'character varying', length: 50, name: 'sub' })
   sub: string;
 

@@ -5,4 +5,5 @@ export class productServiceDto {
   description: string;
   price: number;
   categories: string[];
+  imageLinks: string[];
 }

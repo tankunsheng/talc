@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class tablesInit1612886216891 implements MigrationInterface {
-  name = 'tablesInit1612886216891';
+export class tablesInit1613201846442 implements MigrationInterface {
+  name = 'tablesInit1613201846442';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -17,10 +17,10 @@ export class tablesInit1612886216891 implements MigrationInterface {
       `CREATE TABLE "product_service" ("business_id" character varying(50) NOT NULL, "name" character varying(100) NOT NULL, "type" character varying(20) NOT NULL, "description" character varying(500) NOT NULL, "price" numeric NOT NULL, CONSTRAINT "PK_f023335e2ecb861e9a3a19b0203" PRIMARY KEY ("business_id", "name"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "business" ("business_id" character varying(50) NOT NULL, "name" character varying(100) NOT NULL, "description" character varying(500) NOT NULL, "uen" character varying(50) NOT NULL, "email" character varying(50) NOT NULL, "address" character varying(100) NOT NULL, "main_contact_name" character varying(100) NOT NULL, "main_contact_number" character varying(20) NOT NULL, "picture" character varying(100), CONSTRAINT "PK_a8b2281570e69c768f3c363184b" PRIMARY KEY ("business_id"))`,
+      `CREATE TABLE "product_service_image" ("ps_name" character varying(100) NOT NULL, "image_link" character varying(500) NOT NULL, "business_id" character varying(50) NOT NULL, CONSTRAINT "PK_ccdd5542906f5971feab0a6d997" PRIMARY KEY ("ps_name", "image_link", "business_id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "product_service_image" ("image_id" character varying(50) NOT NULL, "ps_name" character varying(100) NOT NULL, "image_link" character varying(500) NOT NULL, "business_id" character varying(50) NOT NULL, CONSTRAINT "PK_64f5c82271181aecf4b8d14ec15" PRIMARY KEY ("image_id"))`,
+      `CREATE TABLE "business" ("business_id" character varying(50) NOT NULL, "name" character varying(100) NOT NULL, "description" character varying(500) NOT NULL, "uen" character varying(50) NOT NULL, "email" character varying(50) NOT NULL, "address" character varying(100) NOT NULL, "main_contact_name" character varying(100) NOT NULL, "main_contact_number" character varying(20) NOT NULL, "picture" character varying(100), CONSTRAINT "PK_a8b2281570e69c768f3c363184b" PRIMARY KEY ("business_id"))`,
     );
     await queryRunner.query(
       `ALTER TABLE "user" ADD CONSTRAINT "FK_5a4bd96d9a519d4d20a21231b9f" FOREIGN KEY ("business_id") REFERENCES "business"("business_id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
@@ -55,8 +55,8 @@ export class tablesInit1612886216891 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "user" DROP CONSTRAINT "FK_5a4bd96d9a519d4d20a21231b9f"`,
     );
-    await queryRunner.query(`DROP TABLE "product_service_image"`);
     await queryRunner.query(`DROP TABLE "business"`);
+    await queryRunner.query(`DROP TABLE "product_service_image"`);
     await queryRunner.query(`DROP TABLE "product_service"`);
     await queryRunner.query(`DROP TABLE "product_service_to_category"`);
     await queryRunner.query(`DROP TABLE "category"`);

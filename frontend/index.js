@@ -269,11 +269,7 @@ const App = () => {
           </Header>
           <Layout>
             <Sider width={250} className="site-layout-background">
-              <Menu
-                mode="inline"
-                defaultOpenKeys={['sub1']}
-                style={{ height: '100%', borderRight: 0 }}
-              >
+              <Menu mode="inline" style={{ height: '100%', borderRight: 0 }}>
                 <Menu.Item key="1">
                   <Link to="/bp/profile">Business Profile</Link>
                 </Menu.Item>

@@ -13,7 +13,11 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { productServiceDto } from '../../dto/productServiceDto';
-import { ProductService, ProductServiceToCategory } from '../../entities';
+import {
+  ProductService,
+  ProductServiceToCategory,
+  ProductServiceImage,
+} from '../../entities';
 import { ProductServiceService } from './product-service.service';
 
 @Controller('business/product-service')
@@ -31,20 +35,26 @@ export class ProductServiceController {
       params.productServiceName,
     );
   }
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('filess'))
-  async postImagesToProductService(@UploadedFiles() files) {
-    console.log(files);
-  }
-  @Post('upload/files')
-  @UseInterceptors(FilesInterceptor('filess'))
-  async postImagesToProductServices(@UploadedFiles() files) {
-    console.log(files);
+
+  @Post(':businessId/:productServiceName')
+  @UseInterceptors(FilesInterceptor('images'))
+  async postImagesToProductServices(@Param() params, @UploadedFiles() files) {
+    let result;
+    try {
+      result = await this.productServiceService.uploadImagesProductService(
+        files,
+        params.businessId,
+        params.productServiceName,
+      );
+    } catch (err) {
+      throw err;
+    }
+    return result;
   }
 
   //TODO send bussinessId as path parameter instead of body
   @Put()
-  async putProfile(@Body() psDto: productServiceDto, @Req() req: Request) {
+  async putProfile(@Body() psDto: productServiceDto) {
     // console.log(psDto);
     // console.log(psDto);
     const psCategories: ProductServiceToCategory[] = psDto.categories.map(
@@ -56,6 +66,15 @@ export class ProductServiceController {
         );
       },
     );
+    const psImages: ProductServiceImage[] = psDto.imageLinks.map(
+      (eachImageLink) => {
+        return new ProductServiceImage(
+          psDto.businessId,
+          psDto.name,
+          eachImageLink,
+        );
+      },
+    );
     const productService: ProductService = new ProductService(
       psDto.businessId,
       psDto.name,
@@ -63,6 +82,7 @@ export class ProductServiceController {
       psDto.description,
       psDto.price,
       psCategories,
+      psImages,
     );
 
     const results = await this.productServiceService.createProductService(
