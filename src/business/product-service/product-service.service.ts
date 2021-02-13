@@ -38,6 +38,7 @@ export class ProductServiceService {
     let result: ProductService;
     try {
       result = await this.productServiceRepo.findOne({
+        relations: ['productServiceImages'],
         where: {
           businessId: businessId,
           name: productServiceName,
