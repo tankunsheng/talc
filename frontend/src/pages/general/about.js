@@ -3,10 +3,11 @@ import './about.scss';
 import { Typography } from 'antd';
 
 const { Title } = Typography;
-// import test from '../assets/talc_aboutus.PNG';
+// import test from '../../assets/talc_aboutus.PNG';
 export default () => {
   return (
     <div className="aboutus">
+      {/* <img src={test} /> */}
       <img src="https://upload.wikimedia.org/wikipedia/commons/8/85/Logo-Test.png" />
       <Title className="title" level={4}>
         Vision

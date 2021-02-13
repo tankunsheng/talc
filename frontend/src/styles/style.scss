@@ -6,10 +6,12 @@ $primary-color: black;
 #page-container {
   position: relative;
   min-height: 100vh;
+  // TODO padding-bottom to be calculated dynamically instead of hardcodede
+  padding-bottom: 10rem;   
 }
 
 #content-wrap {
-  padding-bottom: 2.5rem;    /* Footer height */
+  padding-bottom: 10rem;    /* Footer height */
 }
 
 #footer {
@@ -18,7 +20,7 @@ $primary-color: black;
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 2.5rem;            /* Footer height */
+  min-height: 2.5rem;            /* Footer height */
   padding-bottom: 2.5em;
 }
 

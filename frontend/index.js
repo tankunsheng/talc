@@ -9,16 +9,17 @@ import Home from './src/pages/general/home';
 import Login from './src/pages/general/login';
 import About from './src/pages/general/about';
 import Faqs from './src/pages/general/faq';
+import ContactUs from './src/pages/general/contactus';
 import ProductServiceDirectory from './src/pages/ps-directory';
 import ProductServiceInCategory from './src/pages/ps-in-category';
 import BusinessDetail from './src/pages/business-detail';
-import ProductServiceDetail from './src/pages/ps-detail';
+import Footer from './src/shared/footer';
 import axios from './src/libs/axios';
 import { BusinessProfile, Store } from './src/pages/business-partner';
 import { UserContext, BusinessContext } from './src/app-context';
 import { UserOutlined, EyeOutlined } from '@ant-design/icons';
 const { Title } = Typography;
-const { Header, Content, Sider, Footer } = Layout;
+const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 const history = createBrowserHistory();
 
@@ -139,6 +140,9 @@ const App = () => {
                 <Menu.Item key="4">
                   <Link to="/obituary">OBITUARY</Link>
                 </Menu.Item>
+                <Menu.Item key="5">
+                  <Link to="/contactus">Contact Us</Link>
+                </Menu.Item>
               </Menu>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
@@ -172,16 +176,14 @@ const App = () => {
                   <Route path="/directory/:category/:businessId/:productService?">
                     <BusinessDetail />
                   </Route>
-                  {/* <Route path="/directory/:category/:business/:productService">
-                    <ProductServiceDetail />
-                  </Route> */}
+                  <Route path="/contactus">
+                    <ContactUs />
+                  </Route>
                 </Switch>
               </Content>
             </Layout>
           </Layout>
-          <Footer id="footer" style={{ textAlign: 'center' }}>
-            TALC@2020 Created by Quintant
-          </Footer>
+          <Footer />
         </Layout>
       </Router>
     </UserContext.Provider>
@@ -304,9 +306,7 @@ const App = () => {
               </Content>
             </Layout>
           </Layout>
-          <Footer id="footer" style={{ textAlign: 'center' }}>
-            TALC@2020 Created by Quintant
-          </Footer>
+          <Footer />
         </Layout>
       </Router>
     </BusinessContext.Provider>
