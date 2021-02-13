@@ -157,7 +157,7 @@ export default () => {
           <Form
             layout="vertical"
             {...layout}
-            initialValues={{ type: 'service', price: 0 }}
+            initialValues={{ type: 'service', price: 1 }}
             form={form}
             onFinish={onSubmit}
           >
@@ -204,6 +204,8 @@ export default () => {
                   ]}
                 >
                   <InputNumber
+                    min={1}
+                    max={999999}
                     formatter={(value) =>
                       `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                     }

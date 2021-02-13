@@ -5,14 +5,14 @@ import './src/styles/style.scss';
 import { Layout, Menu, Typography } from 'antd';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import Home from './src/pages/general/home';
-import Login from './src/pages/general/login';
-import About from './src/pages/general/about';
-import Faqs from './src/pages/general/faq';
-import ContactUs from './src/pages/general/contactus';
-import ProductServiceDirectory from './src/pages/ps-directory';
-import ProductServiceInCategory from './src/pages/ps-in-category';
-import BusinessDetail from './src/pages/business-detail';
+import { Home, Login, About, Faqs, ContactUs } from './src/pages/general';
+import {
+  ProductServiceDirectory,
+  ProductServiceInCategory,
+  Obituary,
+  BusinessDetail,
+  CreateMemorial,
+} from './src/pages';
 import Footer from './src/shared/footer';
 import axios from './src/libs/axios';
 import { BusinessProfile, Store } from './src/pages/business-partner';
@@ -178,6 +178,15 @@ const App = () => {
                   </Route>
                   <Route path="/contactus">
                     <ContactUs />
+                  </Route>
+                  <Route path="/obituary">
+                    <Obituary />
+                  </Route>
+                  <Route path="/memorial">
+                    <Obituary />
+                  </Route>
+                  <Route path="/create-memorial">
+                    <CreateMemorial />
                   </Route>
                 </Switch>
               </Content>
