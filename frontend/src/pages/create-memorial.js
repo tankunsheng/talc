@@ -32,7 +32,6 @@ export default () => {
   const dateFormat = 'YYYY/MM/DD';
   const onSubmit = async (values) => {
     console.log(values);
-    message.warn('To Be Implemented');
     axios
       .put('memorial', values)
       .then((res) => {

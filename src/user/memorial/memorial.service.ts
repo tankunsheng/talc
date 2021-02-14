@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, Between } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Memorial } from '../../entities/memorial.entity';
 
@@ -16,5 +16,16 @@ export class MemorialService {
       console.log(err);
     }
     return createdMemorial;
+  }
+  async listAllByDay(todayDate: Date, tmrDate: Date): Promise<Memorial[]> {
+    let memorials: Memorial[];
+    try {
+      memorials = await this.memorialRepo.find({
+        where: { datetimePosted: Between(todayDate, tmrDate) },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    return memorials;
   }
 }
