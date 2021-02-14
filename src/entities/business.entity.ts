@@ -32,7 +32,7 @@ export class Business {
   @Column({ type: 'character varying', length: 100, name: 'name' })
   name: string;
 
-  @Column({ type: 'character varying', length: 500, name: 'description' })
+  @Column({ type: 'character varying', length: 2500, name: 'description' })
   description: string;
 
   @Column({ type: 'character varying', length: 50, name: 'uen' })

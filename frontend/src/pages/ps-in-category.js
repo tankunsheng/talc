@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams, Link } from 'react-router-dom';
-import './general/about.scss';
+import { useParams, Link } from 'react-router-dom';
 import { Typography, List, Skeleton } from 'antd';
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 import axios from '../libs/axios';
 export default () => {
   let { category } = useParams();
@@ -13,7 +12,6 @@ export default () => {
       setProductServices(res.data);
     });
   }, []);
-  const history = useHistory();
   return (
     <div>
       <Title className="title" level={3}>
@@ -21,14 +19,10 @@ export default () => {
       </Title>
       <List
         className="demo-loadmore-list"
-        // loading={initLoading}
         itemLayout="vertical"
-        // loadMore={loadMore}
         dataSource={productServices}
         renderItem={(item) => (
-          <List.Item
-          // actions={[<a key="list-loadmore-edit">View Profile</a>]}
-          >
+          <List.Item>
             <Skeleton title={true} loading={false} active>
               <List.Item.Meta
                 title={
@@ -46,7 +40,11 @@ export default () => {
                   </Link>
                 }
               />
-              {item.productService.description}
+              <Paragraph
+                ellipsis={{ rows: 3, expandable: true, symbol: 'more' }}
+              >
+                {item.productService.description}
+              </Paragraph>
               <div></div>
             </Skeleton>
           </List.Item>

@@ -1,9 +1,12 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class tablesInit1613201846442 implements MigrationInterface {
-  name = 'tablesInit1613201846442';
+export class tablesInit1613277803790 implements MigrationInterface {
+  name = 'tablesInit1613277803790';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(
+      `CREATE TABLE "memorial" ("memorial_id" character varying(50) NOT NULL, "name" character varying(100) NOT NULL, "description" character varying(2500) NOT NULL, "date_of_passing" date NOT NULL, "date_time_posted" TIMESTAMP NOT NULL, "wake_location" character varying(100) NOT NULL, "wake_start_datetime" TIMESTAMP NOT NULL, "wake_end_datetime" TIMESTAMP NOT NULL, "user_sub" character varying(50), CONSTRAINT "PK_43f432906c9758398c879b8be31" PRIMARY KEY ("memorial_id"))`,
+    );
     await queryRunner.query(
       `CREATE TABLE "user" ("sub" character varying(50) NOT NULL, "username" character varying(50) NOT NULL, "role" character varying(50) NOT NULL, "email" character varying(100) NOT NULL, "address" character varying(250), "gender" character varying(1), "dob" bigint, "hp_no" character varying(20), "datetime_joined" bigint NOT NULL, "business_id" character varying(50), CONSTRAINT "PK_3641ff83ff7c23b2760b3df56d4" PRIMARY KEY ("sub"))`,
     );
@@ -14,13 +17,16 @@ export class tablesInit1613201846442 implements MigrationInterface {
       `CREATE TABLE "product_service_to_category" ("business_id" character varying(50) NOT NULL, "ps_name" character varying(100) NOT NULL, "cat_name" character varying(50) NOT NULL, CONSTRAINT "PK_2123de19afd98b944e061e32aa4" PRIMARY KEY ("business_id", "ps_name", "cat_name"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "product_service" ("business_id" character varying(50) NOT NULL, "name" character varying(100) NOT NULL, "type" character varying(20) NOT NULL, "description" character varying(500) NOT NULL, "price" numeric NOT NULL, CONSTRAINT "PK_f023335e2ecb861e9a3a19b0203" PRIMARY KEY ("business_id", "name"))`,
+      `CREATE TABLE "product_service" ("business_id" character varying(50) NOT NULL, "name" character varying(100) NOT NULL, "type" character varying(20) NOT NULL, "description" character varying(2500) NOT NULL, "price" numeric NOT NULL, CONSTRAINT "PK_f023335e2ecb861e9a3a19b0203" PRIMARY KEY ("business_id", "name"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "product_service_image" ("ps_name" character varying(100) NOT NULL, "image_link" character varying(500) NOT NULL, "business_id" character varying(50) NOT NULL, CONSTRAINT "PK_ccdd5542906f5971feab0a6d997" PRIMARY KEY ("ps_name", "image_link", "business_id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "business" ("business_id" character varying(50) NOT NULL, "name" character varying(100) NOT NULL, "description" character varying(500) NOT NULL, "uen" character varying(50) NOT NULL, "email" character varying(50) NOT NULL, "address" character varying(100) NOT NULL, "main_contact_name" character varying(100) NOT NULL, "main_contact_number" character varying(20) NOT NULL, "picture" character varying(100), CONSTRAINT "PK_a8b2281570e69c768f3c363184b" PRIMARY KEY ("business_id"))`,
+      `CREATE TABLE "business" ("business_id" character varying(50) NOT NULL, "name" character varying(100) NOT NULL, "description" character varying(2500) NOT NULL, "uen" character varying(50) NOT NULL, "email" character varying(50) NOT NULL, "address" character varying(100) NOT NULL, "main_contact_name" character varying(100) NOT NULL, "main_contact_number" character varying(20) NOT NULL, "picture" character varying(100), CONSTRAINT "PK_a8b2281570e69c768f3c363184b" PRIMARY KEY ("business_id"))`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "memorial" ADD CONSTRAINT "FK_c9741d2201244eb1d0d29fe2282" FOREIGN KEY ("user_sub") REFERENCES "user"("sub") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "user" ADD CONSTRAINT "FK_5a4bd96d9a519d4d20a21231b9f" FOREIGN KEY ("business_id") REFERENCES "business"("business_id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
@@ -55,11 +61,15 @@ export class tablesInit1613201846442 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "user" DROP CONSTRAINT "FK_5a4bd96d9a519d4d20a21231b9f"`,
     );
+    await queryRunner.query(
+      `ALTER TABLE "memorial" DROP CONSTRAINT "FK_c9741d2201244eb1d0d29fe2282"`,
+    );
     await queryRunner.query(`DROP TABLE "business"`);
     await queryRunner.query(`DROP TABLE "product_service_image"`);
     await queryRunner.query(`DROP TABLE "product_service"`);
     await queryRunner.query(`DROP TABLE "product_service_to_category"`);
     await queryRunner.query(`DROP TABLE "category"`);
     await queryRunner.query(`DROP TABLE "user"`);
+    await queryRunner.query(`DROP TABLE "memorial"`);
   }
 }

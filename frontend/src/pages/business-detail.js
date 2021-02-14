@@ -43,9 +43,7 @@ export default () => {
       <Title style={{ textAlign: 'left' }} level={4}>
         {createLinkBreadcrumbs()}
       </Title>
-      <Title className="title" level={2}>
-        {business.name}
-      </Title>
+      <Title level={2}>{business.name}</Title>
       {productService ? (
         <ProductServiceDetail />
       ) : (

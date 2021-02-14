@@ -38,7 +38,7 @@ export class ProductService {
   @Column({ type: 'character varying', length: 20, name: 'type' })
   type: string;
 
-  @Column({ type: 'character varying', length: 500, name: 'description' })
+  @Column({ type: 'character varying', length: 2500, name: 'description' })
   description: string;
 
   @Column({ type: 'numeric', name: 'price' })

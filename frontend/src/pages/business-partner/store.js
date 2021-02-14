@@ -121,6 +121,8 @@ export default () => {
   const handleChange = ({ file, fileList }) => {
     if (file.status === 'done' && checkFile(file)) {
       setImageList(imageList.concat([file]));
+    } else if (file.status === 'removed') {
+      setImageList(fileList);
     }
     console.log(fileList);
   };
@@ -255,6 +257,7 @@ export default () => {
                   label="Service Description"
                   rules={[
                     {
+                      max: 2500,
                       required: true,
                     },
                   ]}

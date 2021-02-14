@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
-import './general/about.scss';
+import { Link } from 'react-router-dom';
 import { Typography, Card, List } from 'antd';
 const { Title } = Typography;
 import axios from '../libs/axios';
@@ -12,7 +11,6 @@ export default () => {
       setCategories(res.data);
     });
   }, []);
-  const history = useHistory();
   return (
     <div>
       <Title className="title" level={2}>

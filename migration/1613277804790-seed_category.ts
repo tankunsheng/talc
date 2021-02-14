@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { Category, User } from '../src/entities';
 
-export class seedCategory1613201847442 implements MigrationInterface {
+export class seedCategory1613277804790 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     const categories: Category[] = [
       new Category('Funeral Director', 'Funeral Director'),

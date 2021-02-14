@@ -1,5 +1,13 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryColumn,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 import { Business } from './business.entity';
+import { Memorial } from './memorial.entity';
 @Entity()
 export class User {
   constructor(
@@ -61,4 +69,7 @@ export class User {
   @ManyToOne(() => Business, (business) => business.users)
   @JoinColumn({ name: 'business_id' })
   business: Business;
+
+  @OneToMany(() => Memorial, (memorial) => memorial.user)
+  memorials: Memorial[];
 }

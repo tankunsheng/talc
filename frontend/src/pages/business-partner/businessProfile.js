@@ -158,7 +158,7 @@ export default () => {
                   rules={[
                     {
                       required: true,
-                      max: 500,
+                      max: 2500,
                     },
                   ]}
                 >

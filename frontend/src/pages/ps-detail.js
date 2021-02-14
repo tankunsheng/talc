@@ -33,9 +33,11 @@ export default () => {
       </Title> */}
       {productServiceDetail && (
         <div>
-          <h2>{productServiceDetail.name}</h2>
+          <h3>{productServiceDetail.name}</h3>
           <Image.PreviewGroup>{images}</Image.PreviewGroup>
-          <p> ${productServiceDetail.price}</p>
+          <p>
+            <b> ${productServiceDetail.price}</b>
+          </p>
           <p>{productServiceDetail.description}</p>
         </div>
       )}

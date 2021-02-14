@@ -31,9 +31,7 @@ export default () => {
           ></iframe>
         </Col>
         <Col span={12}>
-          <Title className="title" level={4}>
-            Send us a message
-          </Title>
+          <Title level={4}>Send us a message</Title>
           <Form
             layout="vertical"
             {...layout}
