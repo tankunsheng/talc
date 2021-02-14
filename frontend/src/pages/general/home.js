@@ -1,10 +1,9 @@
 import React from 'react';
 import './about.scss';
-import { Typography } from 'antd';
+import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import { Button } from 'antd';
 import './home.scss';
-const { Title } = Typography;
 export default () => {
   const ButtonSize = 'large';
   return (
@@ -12,22 +11,24 @@ export default () => {
       <iframe
         width="560"
         height="315"
-        src="https://www.youtube.com/embed/lbSOLBMUvIE"
-        frameborder="0"
+        src="https://www.youtube.com/embed/grr7V8Qt6fw"
+        frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
+        allowFullScreen
       ></iframe>
       <br /> <br />
       <Row>
         <Col span={6}></Col>
         <Col span={6}>
           <Button className="home-btn right" size={ButtonSize}>
-            Contact a Funeral Director Now
+            <Link to="/directory/Funeral%20Director">
+              Contact a Funeral Director Now
+            </Link>
           </Button>
         </Col>
         <Col span={6}>
           <Button className="home-btn left" size={ButtonSize}>
-            FAQs About Funeral Planning
+            <Link to="/faq/general">FAQs About Funeral Planning</Link>
           </Button>
         </Col>
       </Row>
@@ -36,12 +37,12 @@ export default () => {
         <Col span={6}></Col>
         <Col span={6}>
           <Button className="home-btn right" size={ButtonSize}>
-            Pre and Post Death Planning
+            <Link to="/faq/steps">Pre and Post Death Planning</Link>
           </Button>
         </Col>
         <Col span={6}>
           <Button className="home-btn left" size={ButtonSize}>
-            Create an Online Memorial Page
+            <Link to="/create-memorial">Create an Online Memorial Page</Link>
           </Button>
         </Col>
       </Row>

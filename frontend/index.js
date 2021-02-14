@@ -223,7 +223,6 @@ const App = () => {
                         <Link to="/">The Afterlife Company (Business)</Link>
                       </Title>
                     </Menu.Item>
-
                     {!user && (
                       <Menu.Item key="3" style={{ float: 'right' }}>
                         <Link to="/login">Log In/Sign Up</Link>

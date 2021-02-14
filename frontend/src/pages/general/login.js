@@ -145,7 +145,7 @@ export default () => {
                   Test users:
                   <ol>
                     <li>talc_business (business) password: Talc1234</li>
-                    <li>talc_user (user) password: Talc1234</li>
+                    {/* <li>talc_user (user) password: Talc1234</li> */}
                   </ol>
                 </TabPane>
 
