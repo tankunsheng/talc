@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import {
   Row,
   Col,
@@ -34,6 +33,21 @@ export default () => {
   const onSubmit = async (values) => {
     console.log(values);
     message.warn('To Be Implemented');
+    axios
+      .put('memorial', values)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          notification.open({
+            message: `Memorial created for ${res.data.name}`,
+            duration: 10,
+          });
+          form.resetFields();
+        }
+      })
+      .catch((err) => {
+        message.error(err.response.data.message);
+      });
   };
   const onReset = () => {
     form.resetFields();
@@ -118,7 +132,10 @@ export default () => {
                     },
                   ]}
                 >
-                  <DatePicker format={dateFormat} />
+                  <DatePicker
+                    format={dateFormat}
+                    disabledDate={(currentDate) => currentDate > Date.now()}
+                  />
                 </Form.Item>
               </Col>
             </Row>
@@ -141,7 +158,7 @@ export default () => {
                 </Form.Item>
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Upload
                 listType="picture-card"
                 fileList={imageList}
@@ -166,7 +183,7 @@ export default () => {
                   src={previewImage}
                 />
               </Modal>
-            </Row>
+            </Row> */}
 
             <Title level={3}>Wake Details</Title>
             <Row gutter={[8]}>

@@ -11,6 +11,7 @@ export class Memorial {
     wakeLocation: string,
     wakeStartDatetime: Date,
     wakeEndDatetime: Date,
+    user: User,
   ) {
     this.memorialId = memorialId;
     this.name = name;
@@ -20,6 +21,7 @@ export class Memorial {
     this.wakeLocation = wakeLocation;
     this.wakeStartDatetime = wakeStartDatetime;
     this.wakeEndDatetime = wakeEndDatetime;
+    this.user = user;
   }
   @PrimaryColumn({ type: 'character varying', length: 50, name: 'memorial_id' })
   memorialId: string;

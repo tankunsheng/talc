@@ -34,7 +34,7 @@ export default () => {
           description: `Business profile ${
             businessId ? 'updated' : 'created'
           } for ${res.data.name}`,
-          duration: 10000,
+          duration: 10,
         });
         setBusinessId(res.data.businessId);
       }

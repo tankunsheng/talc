@@ -4,6 +4,7 @@ import { ProductService } from './product.service.entity';
 import { ProductServiceToCategory } from './product.service.to.category.entity';
 import { ProductServiceImage } from './product.service.image.entity';
 import { Category } from './category.entity';
+import { Memorial } from './memorial.entity';
 
 export {
   Business,
@@ -12,4 +13,5 @@ export {
   ProductServiceToCategory,
   ProductServiceImage,
   Category,
+  Memorial,
 };

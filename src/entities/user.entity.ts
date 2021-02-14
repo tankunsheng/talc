@@ -12,10 +12,10 @@ import { Memorial } from './memorial.entity';
 export class User {
   constructor(
     sub: string,
-    role: string,
-    username: string,
-    email: string,
-    datetimeJoined: number,
+    role?: string,
+    username?: string,
+    email?: string,
+    datetimeJoined?: number,
   ) {
     this.sub = sub;
     this.role = role;

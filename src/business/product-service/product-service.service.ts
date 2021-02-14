@@ -58,6 +58,7 @@ export class ProductServiceService {
     console.log(files);
     const imageUploadPromises = files.map(async (eachFile) => {
       const params = {
+        //TODO refactor into env variable
         Bucket: 'talc-dev',
         Key: `${businessId}/${producServiceName}/${eachFile.originalname}`, // File name you want to save as in S3
         Body: eachFile.buffer,

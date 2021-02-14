@@ -17,6 +17,7 @@ import {
 import { BusinessModule } from './business/business.module';
 import { UserModule } from './user/user.module';
 import { CategoryModule } from './category/category.module';
+import { Memorial } from './entities/memorial.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -40,6 +41,7 @@ import { CategoryModule } from './category/category.module';
         ProductServiceToCategory,
         Category,
         ProductServiceImage,
+        Memorial,
       ],
     }),
     AuthModule,
